@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <sstream>
-#include <algorithm>
 
 using namespace std;
 
@@ -14,7 +13,7 @@ public:
 
     static string readLine();
     static char getchar();
-
+    static bool validateInput (string input);
 };
 
 #endif

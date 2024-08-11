@@ -1,17 +1,14 @@
 #include "AuxiliaryMethods.h"
 
-char AuxiliaryMethods :: getchar()
-{
-    string entry = "";
+char AuxiliaryMethods :: getchar() {
+    string input = "";
     char sign  = {0};
 
-    while (true)
-    {
-        getline(cin, entry);
+    while (true) {
+        getline(cin, input);
 
-        if (entry.length() == 1)
-        {
-            sign = entry[0];
+        if (input.length() == 1) {
+            sign = input[0];
             break;
         }
         cout << "To nie jest pojedynczy znak. Wpisz ponownie." << endl;
@@ -19,9 +16,16 @@ char AuxiliaryMethods :: getchar()
     return sign;
 }
 
-string AuxiliaryMethods :: readLine()
-{
-    string entry = "";
-    getline(cin, entry);
-    return entry;
+string AuxiliaryMethods :: readLine() {
+    string input = "";
+    getline(cin, input);
+    return input;
+}
+
+bool AuxiliaryMethods :: validateInput (string input) {
+
+
+
+
+
 }
