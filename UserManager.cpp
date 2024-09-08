@@ -1,11 +1,14 @@
 #include "UserManager.h"
 
-void UserManager :: registerUser() {
+
+
+
+void UserManager :: addUser() {
 
     User user = enterUserData();
 
     users.push_back(user);
-    //userFile.dopiszUzytkownikaDoPliku(user);
+    usersFile.addUserToFile(user);
 
     cout << endl << "Konto zalozono pomyslnie" << endl << endl;
     system("pause");
@@ -13,43 +16,37 @@ void UserManager :: registerUser() {
 
 }
 
+int UserManager :: getLastUserId() {
+    if (users.empty() == true)
+        return 1;
+    else
+        return users.back().id + 1;
+}
+
 User UserManager :: enterUserData() {
 
     User user;
 
-    user.id(pobierzIdNowegoUzytkownika());
+    user.id = getLastUserId();
 
-    string name;
     do {
+        string name;
         cout << "Podaj imie: ";
-        cin >> name;
+        user.name = AuxiliaryMethods :: readLine();
 
-        user.name;
-    }
+        string surname;
+        cout << "Podaj nazwisko: ";
+        user.surname = AuxiliaryMethods :: readLine();
 
-    string surname;
-    do {
-        cout << "Podaj imie: ";
-        cin >> surname;
-
-        user.surname;
-    }
-
-    string login;
-    do {
+        string login;
         cout << "Podaj login: ";
-        cin >> login;
+        user.login = AuxiliaryMethods :: readLine();
 
-        user.login;
-    }
-
-    while (checkIfLoginExist(user.login) == true);
+    } while (checkIfLoginExist(user.login) == true);
 
     string password;
-
     cout << "Podaj haslo: ";
-    cin >> password;
-    uzytkownik.password;
+    user.password = AuxiliaryMethods :: readLine();
 
     return user;
 }
@@ -73,7 +70,7 @@ int UserManager :: loginUser() {
     cout << endl << "Podaj login: ";
     login = AuxiliaryMethods :: readLine();
 
-    for (int  i = 0; i < users.size(); i++){
+    for (int  i = 0; i < users.size(); i++) {
         if (users[i].login == login) {
             for (int attemptQuantity = 3; attemptQuantity > 0; attemptQuantity--) {
                 cout << "Podaj haslo. Pozostalo prob: " << attemptQuantity << ": ";
@@ -82,7 +79,7 @@ int UserManager :: loginUser() {
                 if (users[i].password== password) {
                     cout << endl << "Zalogowales sie." << endl << endl;
                     system("pause");
-                    loggedInUserId = uzytkownicy[i].id;
+                    loggedInUserId = users[i].id;
                     return loggedInUserId;
                 }
             }
@@ -96,8 +93,8 @@ int UserManager :: loginUser() {
     return 0;
 }
 
-bool UserManager :: isUserLoggedIn(){
-return (loggedInUserId > 0) ? true : false;
+bool UserManager :: isUserLoggedIn() {
+    return (loggedInUserId > 0) ? true : false;
 }
 
 void UserManager::logoutUser() {
@@ -114,12 +111,12 @@ void UserManager :: changeUserPassword() {
     newPassword = AuxiliaryMethods :: readLine();
 
     for (vector <User>::iterator itr = users.begin(); itr != users.end(); itr++) {
-        if (itr -> user.id == loggedInUserId) {
-            itr -> user.password = newPassword;
+        if (itr -> id == loggedInUserId) {
+            itr -> password = newPassword;
             cout << "Haslo zostalo zmienione." << endl << endl;
             system("pause");
         }
     }
-    /*userFile.
-    plikZUzytkownikami.zapiszWszystkichUzytkownikowDoPliku(uzytkownicy);*/
+    /*  usersFile.
+      plikZUzytkownikami.zapiszWszystkichUzytkownikowDoPliku(uzytkownicy);*/
 }

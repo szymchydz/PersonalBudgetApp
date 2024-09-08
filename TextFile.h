@@ -1,27 +1,27 @@
 #ifndef TEXTFILE_H
 #define TEXTFILE_H
 
+#include <iostream>
+#include <fstream>
+
 #include "Markup.h"
-#include <string>
 
 using namespace std;
 
 class TextFile {
     const string FILENAME;
+
+protected:
     int lastId;
     CMarkup xmlDoc;
 
-
-public:
     TextFile(const string& fileName) : FILENAME(fileName), lastId(0) {}
 
-    string getFileName() const {
-        return FILENAME;
-    }
+    static bool isFileEmpty(fstream &TextFile);
+    string getFileName();
 
-    int getLastId() const {
-        return lastId;
-    }
+public:
+    int getLastId();
 };
 
-#endif
+#endif // TEXTFILE_H

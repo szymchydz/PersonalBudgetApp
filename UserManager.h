@@ -9,7 +9,7 @@
 #include <cstdlib>
 
 #include "User.h"
-//#include "UserFile.h"
+#include "UsersFile.h"
 
 using namespace std;
 
@@ -17,16 +17,20 @@ class UserManager {
 
     int loggedInUserId;
     vector <User> users;
-    //UserFile userFile;
+    UsersFile usersFile;
 
     bool checkIfLoginExist(const string &login);
     User enterUserData();
+    int getLastUserId();
 
 public:
-    UserManager(string userFilename);
+    UserManager(string usersFileName) : usersFile (usersFileName) {
+        loggedInUserId = 0;
+        users = usersFile.loadUsersFromFile();
+    };
 
 
-    void registerUser();
+    void addUser();
     int loginUser();
     void changeUserPassword();
     void logoutUser();

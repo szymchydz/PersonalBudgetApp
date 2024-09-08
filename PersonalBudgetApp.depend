@@ -1,0 +1,70 @@
+# depslib dependency file v1.0
+1723391894 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\auxiliarymethods.cpp
+	"AuxiliaryMethods.h"
+
+1723391634 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\auxiliarymethods.h
+	<iostream>
+	<sstream>
+
+1725810452 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\main.cpp
+	<iostream>
+	"PersonalBudgetApp.h"
+
+1721762564 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\markup.cpp
+	<stdio.h>
+	"Markup.h"
+	<errno.h>
+	<iconv.h>
+	<windows.h>
+	<mbstring.h>
+
+1721762570 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\markup.h
+	<stdlib.h>
+	<string.h>
+	<string>
+	<afx.h>
+
+1725810607 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usermanager.h
+	<iostream>
+	<vector>
+	<windows.h>
+	<fstream>
+	<sstream>
+	<cstdlib>
+	"User.h"
+	"UsersFile.h"
+
+1723392772 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\user.h
+
+1725808339 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usersfile.h
+	<iostream>
+	<vector>
+	<fstream>
+	<cstdlib>
+	<string>
+	"User.h"
+	"AuxiliaryMethods.h"
+	"TextFile.h"
+
+1725807517 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\textfile.h
+	<iostream>
+	<fstream>
+	"Markup.h"
+
+1725795641 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\textfile.cpp
+	"TextFile.h"
+
+1725808946 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usermanager.cpp
+	"UserManager.h"
+
+1725810376 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usersfile.cpp
+	"UsersFile.h"
+
+1725806792 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.h
+	<iostream>
+	<string>
+	"UserManager.h"
+
+1725806516 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.cpp
+	"PersonalBudgetApp.h"
+

@@ -1,15 +1,23 @@
 #include <iostream>
-#include "UserManager.h"
+
+#include "PersonalBudgetApp.h"
 
 using namespace std;
 
-int main()
-{
+int main() {
 
-   userManager.registerUser();
 
+    PersonalBudgetApp personalBudgetApp ("users.xml");
+
+
+    personalBudgetApp.registerNewUser();
+    personalBudgetApp.registerNewUser();
+    personalBudgetApp.registerNewUser();
 
 
 
     return 0;
 }
+
+
+
