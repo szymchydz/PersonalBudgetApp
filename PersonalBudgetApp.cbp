@@ -45,6 +45,8 @@
 		<Unit filename="TextFile.cpp" />
 		<Unit filename="TextFile.h" />
 		<Unit filename="Transaction.h" />
+		<Unit filename="TransactionFile.cpp" />
+		<Unit filename="TransactionFile.h" />
 		<Unit filename="User.h" />
 		<Unit filename="UserManager.cpp" />
 		<Unit filename="UserManager.h" />

@@ -6,7 +6,7 @@
 	<iostream>
 	<sstream>
 
-1725810452 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\main.cpp
+1725814732 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\main.cpp
 	<iostream>
 	"PersonalBudgetApp.h"
 
@@ -60,11 +60,13 @@
 1725810376 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usersfile.cpp
 	"UsersFile.h"
 
-1725806792 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.h
+1725814770 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.h
 	<iostream>
 	<string>
 	"UserManager.h"
 
-1725806516 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.cpp
+1725814732 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.cpp
 	"PersonalBudgetApp.h"
+
+1725814832 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionfile.cpp
 

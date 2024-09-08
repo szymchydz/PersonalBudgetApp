@@ -6,6 +6,11 @@ void PersonalBudgetApp :: registerNewUser() {
 }
 
 
+void PersonalBudgetApp :: loginUser() {
+    userManager.loginUser();
+}
 
 
-
+void PersonalBudgetApp :: changeUserPassword() {
+    userManager.changeUserPassword();
+}

@@ -14,7 +14,6 @@ class PersonalBudgetApp {
     UserManager userManager;
     //TransactionManager *transactionManager;
     const string FILE_NAME_WITH_TRANSACTIONS;
-    //const string FILE_NAME_WITH_EXPENSES;
 
 public:
     PersonalBudgetApp(string fileNameWithUsers) /*string fileNameWithTransactions*/
@@ -28,10 +27,10 @@ public:
     };
 
     void registerNewUser();
-    /*void loginUser();
-    void logoutUser();
-    void changePassword();
-    void addIncome();
+    void loginUser();
+    //void logoutUser();
+    void changeUserPassword();
+    /*void addIncome();
     void addExpense();
     void displayCurrentMonthsBalanceSheet();
     void displayPreviousMonthsBalanceSheet();

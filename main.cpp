@@ -9,10 +9,11 @@ int main() {
 
     PersonalBudgetApp personalBudgetApp ("users.xml");
 
+    personalBudgetApp.registerNewUser();
 
-    personalBudgetApp.registerNewUser();
-    personalBudgetApp.registerNewUser();
-    personalBudgetApp.registerNewUser();
+    personalBudgetApp.loginUser();
+
+    personalBudgetApp.changeUserPassword();
 
 
 
