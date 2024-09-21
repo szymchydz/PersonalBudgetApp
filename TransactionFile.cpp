@@ -1,6 +1,6 @@
-/*#include "TransactionFile.h"
+#include "TransactionFile.h"
 
-bool TransactionFile :: addTransactionToFile(User &user) {
+bool TransactionFile :: addTransactionToFile (Transaction &transaction, const Type &type) {
 
     bool fileExists = xmlTransactions.Load(getFileName());
 
@@ -10,10 +10,10 @@ bool TransactionFile :: addTransactionToFile(User &user) {
 
        switch(type) {
         case INCOME:
-            xml.AddElem("Incomes");
+            xmlTransactions.AddElem("Incomes");
             break;
         case EXPENSE:
-            xml.AddElem("Expenses");
+            xmlTransactions.AddElem("Expenses");
             break;
         }
     }
@@ -22,11 +22,11 @@ bool TransactionFile :: addTransactionToFile(User &user) {
     xmlTransactions.IntoElem();
     xmlTransactions.AddElem("Transaction");
     xmlTransactions.IntoElem();
-    xmlTransactions.AddElem("Transactiond", transaction.id);
+    xmlTransactions.AddElem("TransactionId", transaction.id);
+    xmlTransactions.AddElem("UserId", transaction.userId);
     xmlTransactions.AddElem("Date", transaction.date);
-    xmlTransactions.AddElem("Surname",user.surname);
-    xmlTransactions.AddElem("Login", user.login);
-    xmlTransactions.AddElem("Password", user.password);
+    xmlTransactions.AddElem("Item",transaction.item);
+    xmlTransactions.AddElem("Amount", transaction.amount);
     xmlTransactions.OutOfElem();
 
     if (xmlTransactions.Save(getFileName())) {
@@ -35,4 +35,5 @@ bool TransactionFile :: addTransactionToFile(User &user) {
     } else {
         cout << "Nie udalo sie zapisac danych." << endl;
         return false;
-    }*/
+    }
+}

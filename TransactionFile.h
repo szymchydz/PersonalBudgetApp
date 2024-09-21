@@ -1,4 +1,4 @@
-/*#ifndef TRANSACTIONFILE_H
+#ifndef TRANSACTIONFILE_H
 #define TRANSACTIONFILE_H
 
 
@@ -11,6 +11,8 @@
 #include "Transaction.h"
 #include "AuxiliaryMethods.h"
 #include "TextFile.h"
+#include "Type.h"
+
 
 using namespace std;
 
@@ -19,10 +21,10 @@ class TransactionFile : public TextFile
     CMarkup xmlTransactions;
 
     public:
-        TransactionsFile(const string& fileName) : TextFile (fileName) {};
-        bool addTransactionToFile (Transaction &transaction);
-        vector <Transaction> loadTransactionFromFile();:
+        TransactionFile(const string& fileName) : TextFile (fileName) {};
+        bool addTransactionToFile (Transaction &transaction, const Type &type);
+        vector <Transaction> loadTransactionFromFile();
 };
 
 #endif // TRANSACTIONFILE_H
-*/
+
