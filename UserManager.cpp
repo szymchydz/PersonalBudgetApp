@@ -1,8 +1,5 @@
 #include "UserManager.h"
 
-
-
-
 void UserManager :: addUser() {
 
     User user = enterUserData();
@@ -117,6 +114,5 @@ void UserManager :: changeUserPassword() {
             system("pause");
         }
     }
-    /*  usersFile.
-      plikZUzytkownikami.zapiszWszystkichUzytkownikowDoPliku(uzytkownicy);*/
+    usersFile.saveChangedPassword(loggedInUserId, newPassword);
 }
