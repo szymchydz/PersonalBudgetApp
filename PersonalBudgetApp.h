@@ -5,39 +5,39 @@
 #include <string>
 
 #include "UserManager.h"
-//#include "TransactionManager.h"
+#include "TransactionManager.h"
 
 using namespace std;
 
 class PersonalBudgetApp {
 
     UserManager userManager;
-    //TransactionManager *transactionManager;
+    TransactionManager transactionManager;
     const string FILE_NAME_WITH_TRANSACTIONS;
 
 public:
-    PersonalBudgetApp(string fileNameWithUsers) /*string fileNameWithTransactions*/
-        : userManager(fileNameWithUsers)/*FILE_NAME_WITH_TRANSACTION(fileNameWithTransactions))*/ {
-        //transactionManager = NULL;
+    PersonalBudgetApp(const string& fileNameWithUsers, const string& fileNameWithTransactions, int loggedInUserId)
+        : userManager(fileNameWithUsers),
+          transactionManager(fileNameWithTransactions, loggedInUserId),
+          FILE_NAME_WITH_TRANSACTIONS(fileNameWithTransactions) {
     };
 
     ~PersonalBudgetApp() {
-       // delete transactionManager;
-        //transactionManager = NULL;
     };
 
     void registerNewUser();
     void loginUser();
-    //void logoutUser();
-    void changeUserPassword();
-    /*void addIncome();
-    void addExpense();
-    void displayCurrentMonthsBalanceSheet();
-    void displayPreviousMonthsBalanceSheet();
-    void displayBalanceSheetFromSelectedTimePeriod();
     bool isUserLoggedIn();
+    void logoutUser();
+    void changeUserPassword();
+    void addIncome();
+    void addExpense();
+    /*void displayCurrentMonthsBalanceSheet();
+    void displayPreviousMonthsBalanceSheet();
+    void displayBalanceSheetFromSelectedTimePeriod();*/
+
     char selectOptionFromMainMenu();
-    char selectOptionFromBudgetMenu();*/
+    char selectOptionFromBudgetMenu();
 
 };
 

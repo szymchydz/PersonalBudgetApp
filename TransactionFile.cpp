@@ -38,7 +38,7 @@ bool TransactionFile :: addTransactionToFile (Transaction &transaction, const Ty
     }
 }
 
-vector <Transaction> TransactionFile ::loadTransactionFromFile(){
+vector <Transaction> TransactionFile ::loadTransactionFromFile(int loggedInUserId){
 
     Transaction transaction;
     vector <Transaction> transactions;

@@ -23,7 +23,7 @@ class TransactionFile : public TextFile
     public:
         TransactionFile(const string& fileName) : TextFile (fileName) {};
         bool addTransactionToFile (Transaction &transaction, const Type &type);
-        vector <Transaction> loadTransactionFromFile();
+        vector <Transaction> loadTransactionFromFile(int loggedInUserId);
 };
 
 #endif // TRANSACTIONFILE_H

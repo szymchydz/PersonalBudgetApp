@@ -13,7 +13,8 @@ public:
 
     static string readLine();
     static char getchar();
-    static bool validateInput (string input);
+    static int convertStringToInt(string number);
+    static string validateInput (string input);
 };
 
 #endif

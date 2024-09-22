@@ -38,6 +38,8 @@
 		</Compiler>
 		<Unit filename="AuxiliaryMethods.cpp" />
 		<Unit filename="AuxiliaryMethods.h" />
+		<Unit filename="DateMethods.cpp" />
+		<Unit filename="DateMethods.h" />
 		<Unit filename="Markup.cpp" />
 		<Unit filename="Markup.h" />
 		<Unit filename="PersonalBudgetApp.cpp" />
@@ -47,6 +49,8 @@
 		<Unit filename="Transaction.h" />
 		<Unit filename="TransactionFile.cpp" />
 		<Unit filename="TransactionFile.h" />
+		<Unit filename="TransactionManager.cpp" />
+		<Unit filename="TransactionManager.h" />
 		<Unit filename="Type.h" />
 		<Unit filename="User.h" />
 		<Unit filename="UserManager.cpp" />
