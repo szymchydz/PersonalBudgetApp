@@ -37,3 +37,41 @@ bool TransactionFile :: addTransactionToFile (Transaction &transaction, const Ty
         return false;
     }
 }
+
+vector <Transaction> TransactionFile ::loadTransactionFromFile(){
+
+    Transaction transaction;
+    vector <Transaction> transactions;
+
+   bool fileExists = xmlTransactions.Load(getFileName());
+
+    if (fileExists) {
+        xmlTransactions.ResetPos();
+        xmlTransactions.FindElem();
+        xmlTransactions.IntoElem();
+
+        while (xmlTransactions.FindElem("Transaction")) {
+            xmlTransactions.FindChildElem("TransactionId");
+            transaction.id = atoi(xmlTransactions.GetChildData().c_str());
+
+            xmlTransactions.FindChildElem("UserId");
+            transaction.userId = atoi(xmlTransactions.GetChildData().c_str());
+
+            xmlTransactions.FindChildElem("Date");
+            transaction.date = atoi(xmlTransactions.GetChildData().c_str());
+
+            xmlTransactions.FindChildElem("Item");
+            transaction.item = xmlTransactions.GetChildData();
+
+            xmlTransactions.FindChildElem("Amount");
+            transaction.amount = atoi(xmlTransactions.GetChildData().c_str());
+
+
+            transactions.push_back(transaction);
+        }
+        xmlTransactions.OutOfElem();
+    } else
+        cout << "Nie mozna otworzyc pliku." << endl;
+
+    return transactions;
+}
