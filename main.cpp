@@ -6,9 +6,7 @@ using namespace std;
 
 int main() {
 
-//int loggedInUserId = getLoggedInUserId();
-
-    PersonalBudgetApp personalBudgetApp ("users.xml", "transaction.xml", loggedInUserId);
+    PersonalBudgetApp personalBudgetApp ("users.xml", "transaction.xml");
 
     char choice;
 

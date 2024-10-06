@@ -24,11 +24,11 @@ Transaction TransactionManager::addTransactionDetails(const Type &type) {
     switch(type) {
 
     case INCOME:
-        transaction.id = transactionFile.getLastId()+1;
+        transaction.id = transactionFile.currentTransactionId + 1;
         typeDescription = "przychod";
         break;
     case EXPENSE:
-        transaction.id = transactionFile.getLastId()+1;
+        transaction.id = transactionFile.currentTransactionId +1;
         typeDescription = "wydatek";
         break;
     }
@@ -103,3 +103,4 @@ void TransactionManager::addExpense() {
         cout << "Blad. Nie udalo sie dodac nowego wydatku do pliku." << endl;
         system("pause");
 }
+

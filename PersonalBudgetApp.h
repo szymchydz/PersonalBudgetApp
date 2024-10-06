@@ -12,17 +12,17 @@ using namespace std;
 class PersonalBudgetApp {
 
     UserManager userManager;
-    TransactionManager transactionManager;
+    TransactionManager *transactionManager;
     const string FILE_NAME_WITH_TRANSACTIONS;
 
 public:
-    PersonalBudgetApp(const string& fileNameWithUsers, const string& fileNameWithTransactions, int loggedInUserId)
-        : userManager(fileNameWithUsers),
-          transactionManager(fileNameWithTransactions, loggedInUserId),
-          FILE_NAME_WITH_TRANSACTIONS(fileNameWithTransactions) {
+    PersonalBudgetApp(const string& fileNameWithUsers, const string& fileNameWithTransactions)
+        : userManager(fileNameWithUsers), FILE_NAME_WITH_TRANSACTIONS(fileNameWithTransactions) {
     };
 
     ~PersonalBudgetApp() {
+      delete transactionManager;
+      transactionManager = NULL;
     };
 
     void registerNewUser();

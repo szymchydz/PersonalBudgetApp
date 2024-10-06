@@ -31,6 +31,7 @@ class TransactionManager {
     double calculateBalanceSheet(int startDate, int endDate, const Type& type);
     void displayCalculateBalanceSheet(int startDate, int endDate);
 
+
 public:
 
     TransactionManager (string fileNameWithTransactions, int loggedInUserId)

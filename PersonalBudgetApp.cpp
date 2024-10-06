@@ -6,7 +6,11 @@ void PersonalBudgetApp :: registerNewUser() {
 }
 
 void PersonalBudgetApp :: loginUser() {
+
     userManager.loginUser();
+    if (userManager.isUserLoggedIn()) {
+        transactionManager = new TransactionManager (FILE_NAME_WITH_TRANSACTIONS, userManager.getLoggedInUserId());
+    }
 }
 
 bool PersonalBudgetApp :: isUserLoggedIn() {
@@ -14,7 +18,10 @@ bool PersonalBudgetApp :: isUserLoggedIn() {
 }
 
 void PersonalBudgetApp :: logoutUser() {
+
     userManager.logoutUser();
+    delete transactionManager;
+    transactionManager = NULL;
 }
 
 void PersonalBudgetApp :: changeUserPassword() {
@@ -22,12 +29,42 @@ void PersonalBudgetApp :: changeUserPassword() {
 }
 
 void PersonalBudgetApp :: addIncome() {
-    transactionManager.addIncome();
+    if(userManager.isUserLoggedIn()) {
+        transactionManager->addIncome();
+    } else {
+        cout << "Aby dodac zarobek, nalezy najpierw sie zalogowac." << endl;
+        system("pause");
+    }
+}
+void PersonalBudgetApp :: addExpense() {
+    if(userManager.isUserLoggedIn()) {
+        transactionManager->addExpense();
+    } else {
+        cout << "Aby dodac zarobek, nalezy najpierw sie zalogowac." << endl;
+        system("pause");
+    }
 }
 
-void PersonalBudgetApp :: addExpense() {
-    transactionManager.addExpense();
+/*void PersonalBudgetApp::displayCurrentMonthsBalanceSheet() {
+
+    transactionManager->displayCurrentMonthsBalanceSheet();
 }
+
+void PPersonalBudgetApp::displayPreviousMonthsBalanceSheet() {
+
+    transactionManager->displayPreviousMonthsBalanceSheet();
+}
+
+void PPersonalBudgetApp::displayBalanceSheetFromSelectedTimePeriod() {
+
+    transactionManager->displayBalanceSheetFromSelectedTimePeriod();
+}
+
+bool PersonalBudgetApp::isUserLoggedIn() {
+
+    return userManager.isUserLoggedIn();
+}*/
+
 
 char PersonalBudgetApp::selectOptionFromMainMenu() {
 
