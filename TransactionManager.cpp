@@ -78,7 +78,7 @@ void TransactionManager::addIncome() {
     system("cls");
     cout << " >>> DODAWANIE NOWEGO PRZYCHODU <<<" << endl << endl;
     income = addTransactionDetails(INCOME);
-    incomes.push_back(income);
+    transactions.push_back(income);
 
     if(transactionFile.addTransactionToFile(income, INCOME) == true) {
         cout << "Nowy przychod zostal dodany do pliku." << endl;
@@ -95,7 +95,7 @@ void TransactionManager::addExpense() {
     system("cls");
     cout << " >>> DODAWANIE NOWEGO WYDATKU <<<" << endl << endl;
     expense = addTransactionDetails(EXPENSE);
-    expenses.push_back(expense);
+    transactions.push_back(expense);
 
      if(transactionFile.addTransactionToFile(expense, EXPENSE) == true) {
         cout << "Nowy wydatek zostal dodany do pliku." << endl;

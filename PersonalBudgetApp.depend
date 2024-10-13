@@ -69,7 +69,7 @@
 1728229519 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.cpp
 	"PersonalBudgetApp.h"
 
-1728246228 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionfile.cpp
+1728838983 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionfile.cpp
 	"TransactionFile.h"
 
 1727024505 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\datemethods.cpp
@@ -86,7 +86,7 @@
 	<algorithm>
 	"AuxiliaryMethods.h"
 
-1728237809 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionmanager.h
+1728836257 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionmanager.h
 	<iostream>
 	<vector>
 	<cstdlib>
@@ -100,7 +100,7 @@
 
 1726940991 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transaction.h
 
-1728246228 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionfile.h
+1728835909 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionfile.h
 	<iostream>
 	<vector>
 	<fstream>
@@ -114,6 +114,6 @@
 1726939033 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\type.h
 	<iostream>
 
-1728245674 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionmanager.cpp
+1728836331 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionmanager.cpp
 	"TransactionManager.h"
 

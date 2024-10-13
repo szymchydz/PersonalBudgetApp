@@ -17,8 +17,7 @@ using namespace std;
 
 class TransactionManager {
     const int LOGGED_IN_USER_ID;
-    vector <Transaction> expenses;
-    vector <Transaction> incomes;
+    vector <Transaction> transactions;
     TransactionFile transactionFile;
     DateMethods dateMethods;
 
@@ -36,8 +35,7 @@ public:
 
     TransactionManager (string fileNameWithTransactions, int loggedInUserId)
         : LOGGED_IN_USER_ID(loggedInUserId), transactionFile(fileNameWithTransactions) {
-        incomes = transactionFile.loadTransactionFromFile(LOGGED_IN_USER_ID);
-        expenses = transactionFile.loadTransactionFromFile(LOGGED_IN_USER_ID);
+       transactions = transactionFile.loadTransactionFromFile(LOGGED_IN_USER_ID);
     };
 
     void addIncome();
