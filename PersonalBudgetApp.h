@@ -32,8 +32,8 @@ public:
     void changeUserPassword();
     void addIncome();
     void addExpense();
-    /*void displayCurrentMonthsBalanceSheet();
-    void displayPreviousMonthsBalanceSheet();
+    void displayCurrentMonthBalanceSheet();
+    /*void displayPreviousMonthsBalanceSheet();
     void displayBalanceSheetFromSelectedTimePeriod();*/
 
     char selectOptionFromMainMenu();

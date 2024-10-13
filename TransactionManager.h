@@ -40,7 +40,9 @@ public:
 
     void addIncome();
     void addExpense();
-
+    void displayCurrentMonthBalanceSheet();
+    void displayPreviousMonthBalanceSheet();
+    void displayBalanceSheetFromSelectedTimePeriod();
 };
 
 #endif // TRANSACTIONMANAGER_H

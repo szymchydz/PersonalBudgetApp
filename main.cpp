@@ -40,7 +40,7 @@ int main() {
                 personalBudgetApp.addExpense();
                 break;
             case '3':
-                //personalBudgetApp.displayCurrentMonthsBalanceSheet();
+                personalBudgetApp.displayCurrentMonthBalanceSheet();
                 break;
             case '4':
                 //personalBudgetApp.displayPreviousMonthsBalanceSheet();

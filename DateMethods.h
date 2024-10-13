@@ -19,7 +19,7 @@ class DateMethods
 
 public:
 
-    string getTimeFromSystem();
+    string getTimeFromSystem(const std::string& format = "%Y-%m-%d %H:%M:%S");
     string getPreviousMonthFromDate(string currentDate);
     int checkNumberOfDaysPerMonth(int currentYear, int currentMonth);
     int getYearFromDate(string date);
@@ -27,8 +27,10 @@ public:
     int getDayFromDate(string date);
     bool checkFormatDateIsCorrect(string date);
     static string changeDateWithHypenToDateWithoutHyphen(string date);
-    //void displayDate(string displayedDate);*/
-
+    static string changeDateWithoutHypenToDateWithHyphen(string date);
+    void displayDate(string displayedDate);
+    static string getEndDate(const string& currentDate);
+    static string getStartDate(const string& currentDate);
 };
 
 #endif // DATEMETHODS_H

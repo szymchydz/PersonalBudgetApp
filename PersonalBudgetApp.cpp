@@ -45,17 +45,17 @@ void PersonalBudgetApp :: addExpense() {
     }
 }
 
-/*void PersonalBudgetApp::displayCurrentMonthsBalanceSheet() {
+void PersonalBudgetApp::displayCurrentMonthBalanceSheet() {
 
-    transactionManager->displayCurrentMonthsBalanceSheet();
+    transactionManager->displayCurrentMonthBalanceSheet();
 }
 
-void PPersonalBudgetApp::displayPreviousMonthsBalanceSheet() {
+/*void PersonalBudgetApp::displayPreviousMonthsBalanceSheet() {
 
     transactionManager->displayPreviousMonthsBalanceSheet();
 }
 
-void PPersonalBudgetApp::displayBalanceSheetFromSelectedTimePeriod() {
+void PersonalBudgetApp::displayBalanceSheetFromSelectedTimePeriod() {
 
     transactionManager->displayBalanceSheetFromSelectedTimePeriod();
 }

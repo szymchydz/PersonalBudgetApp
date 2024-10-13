@@ -40,7 +40,7 @@ Transaction TransactionManager::addTransactionDetails(const Type &type) {
     switch (choice) {
 
     case '1':
-        date = dateMethods.getTimeFromSystem();
+        date = dateMethods.getTimeFromSystem("%Y-%m-%d");
         break;
     case '2':
         do {
@@ -104,3 +104,134 @@ void TransactionManager::addExpense() {
         system("pause");
 }
 
+void TransactionManager::sortDateIncomes() {
+
+    sort(transactions.begin(), transactions.end(), [](const Transaction& lhs, const Transaction& rhs) {
+        return lhs.date < rhs.date;
+    });
+}
+void TransactionManager::sortDateExpenses() {
+
+    sort(transactions.begin(), transactions.end(), [](const Transaction& lhs, const Transaction& rhs) {
+        return lhs.date < rhs.date;
+    });
+}
+
+string TransactionManager::displayTransactions(int number, const Type &type) {
+
+    string amount;
+    switch(type) {
+
+    case INCOME:
+        cout << "-------------------------------------------------------------" << endl;
+        cout << "Numer ID: " << transactions[number].id << endl;
+        cout << "Data: ";
+        dateMethods.displayDate(DateMethods::changeDateWithoutHypenToDateWithHyphen(AuxiliaryMethods::convertIntToString(transactions[number].date)));
+        cout << endl << "Opis: " << transactions[number].item << endl;
+        cout << "Wartosc [PLN]: " << transactions[number].amount << endl;
+        amount = transactions[number].amount;
+        break;
+
+    case EXPENSE:
+        cout << "-------------------------------------------------------------" << endl;
+        cout << "Numer ID: " << transactions[number].id << endl;
+        cout << "Data: ";
+        dateMethods.displayDate(DateMethods::changeDateWithoutHypenToDateWithHyphen(AuxiliaryMethods::convertIntToString(transactions[number].date)));
+        cout << endl << "Opis: " << transactions[number].item << endl;
+        cout << "Wartosc [PLN]: " << transactions[number].amount << endl;
+        amount = transactions[number].amount;
+        break;
+
+    }
+    return amount;
+
+}
+
+double TransactionManager::calculateBalanceSheet(int startDate, int endDate, const Type& type) {
+
+    string typeDescription;
+    double sumTransactions = 0;
+
+    switch(type) {
+
+    case INCOME:
+        typeDescription = "PRZYCHODY";
+
+        if(!transactions.empty()) {
+            cout << "         <<<" << typeDescription << ">>>         " << endl;
+
+            for (int i =0; i < (int) transactions.size(); i++) {
+                if (startDate <= transactions[i].date) {
+                    if(endDate >= transactions[i].date)
+                        sumTransactions += (AuxiliaryMethods::convertStringToDouble(displayTransactions(i,INCOME)));
+                }
+            }
+            cout << endl;
+        } else {
+            cout << endl << typeDescription << " NIE ISTNIEJA." << endl;
+        }
+        break;
+
+    case EXPENSE:
+        typeDescription = "WYDATKI";
+
+        if(!transactions.empty()) {
+            cout << "         <<<" << typeDescription << ">>>         " << endl;
+
+            for (int i =0; i < (int) transactions.size(); i++) {
+
+                if (startDate <= transactions[i].date) {
+                    if(endDate >= transactions[i].date) {
+                        sumTransactions+= (AuxiliaryMethods::convertStringToDouble(displayTransactions(i, EXPENSE)));
+                    }
+                }
+            }
+            cout << endl;
+        } else {
+            cout << endl << typeDescription << " NIE ISTNIEJA." << endl;
+        }
+        break;
+    }
+
+    return sumTransactions;
+}
+
+void TransactionManager::displayCalculateBalanceSheet(int startDate, int endDate) {
+
+    sortDateIncomes();
+    sortDateExpenses();
+
+    system("cls");
+    cout << "POKAZ SALDO" << endl;
+    cout << "WYBRANY PRZEDZIAL CZASOWY: " ;
+    dateMethods.displayDate(DateMethods::changeDateWithHypenToDateWithoutHyphen(AuxiliaryMethods::convertIntToString(startDate)));
+    cout << " DO " ;
+    dateMethods.displayDate(DateMethods::changeDateWithoutHypenToDateWithHyphen(AuxiliaryMethods::convertIntToString(endDate)));
+    cout << endl << endl;
+    double incomesSum = calculateBalanceSheet(startDate, endDate, INCOME);
+    double expensesSum = calculateBalanceSheet(startDate, endDate, EXPENSE);
+
+    cout << "-------------------------------------------------------------------" << endl;
+    cout << "Suma przychodow w wybranym przedziale czasowym: " << incomesSum << " PLN." << endl;
+    cout << "Suma wydatkow w wybranym przedziale czasowym: " << expensesSum << " PLN." <<endl;
+    cout << "Saldo w wybranym przedziale czasowym: " << incomesSum - expensesSum << " PLN." << endl;
+
+}
+
+
+void TransactionManager::displayCurrentMonthBalanceSheet() {
+
+string currentDate = dateMethods.getTimeFromSystem("%Y-%m-%d");
+    cout << "Current Date: " << currentDate << endl;
+
+    string startDate = dateMethods.getStartDate(currentDate);
+    cout << "Start Date: " << startDate << endl;
+
+    string endDate = dateMethods.getEndDate(currentDate);
+    cout << "End Date: " << endDate << endl;
+
+    displayCalculateBalanceSheet(AuxiliaryMethods::convertStringToInt(startDate),
+                                 AuxiliaryMethods::convertStringToInt(endDate));
+
+    system("pause");
+}

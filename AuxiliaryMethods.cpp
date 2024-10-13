@@ -49,4 +49,18 @@ int sizeOfAmount = input.size();
     return input;
 }
 
+string AuxiliaryMethods::convertIntToString(int number) {
 
+    ostringstream ss;
+    ss << number;
+    string str = ss.str();
+
+    return str;
+}
+
+double AuxiliaryMethods::convertStringToDouble(string amount) {
+
+    double amountDouble = atof(amount.c_str());
+
+    return amountDouble;
+}
