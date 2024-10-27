@@ -1,16 +1,16 @@
 # depslib dependency file v1.0
-1728841908 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\auxiliarymethods.cpp
+1728838308 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\auxiliarymethods.cpp
 	"AuxiliaryMethods.h"
 
-1728841908 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\auxiliarymethods.h
+1728838308 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\auxiliarymethods.h
 	<iostream>
 	<sstream>
 
-1728843106 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\main.cpp
+1730051529 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\main.cpp
 	<iostream>
 	"PersonalBudgetApp.h"
 
-1721762564 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\markup.cpp
+1721758964 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\markup.cpp
 	<stdio.h>
 	"Markup.h"
 	<errno.h>
@@ -18,13 +18,13 @@
 	<windows.h>
 	<mbstring.h>
 
-1721762570 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\markup.h
+1721758970 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\markup.h
 	<stdlib.h>
 	<string.h>
 	<string>
 	<afx.h>
 
-1725810607 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usermanager.h
+1725807007 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usermanager.h
 	<iostream>
 	<vector>
 	<windows.h>
@@ -34,9 +34,9 @@
 	"User.h"
 	"UsersFile.h"
 
-1723392772 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\user.h
+1723389172 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\user.h
 
-1725808339 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usersfile.h
+1725804739 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usersfile.h
 	<iostream>
 	<vector>
 	<fstream>
@@ -46,36 +46,36 @@
 	"AuxiliaryMethods.h"
 	"TextFile.h"
 
-1725807517 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\textfile.h
+1725803917 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\textfile.h
 	<iostream>
 	<fstream>
 	"Markup.h"
 
-1725795641 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\textfile.cpp
+1730049389 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\textfile.cpp
 	"TextFile.h"
 
-1726939726 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usermanager.cpp
+1726936126 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usermanager.cpp
 	"UserManager.h"
 
-1725815564 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usersfile.cpp
+1725811964 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usersfile.cpp
 	"UsersFile.h"
 
-1728840371 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.h
+1730051529 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.h
 	<iostream>
 	<string>
 	"UserManager.h"
 	"TransactionManager.h"
 
-1728840328 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.cpp
+1730051529 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.cpp
 	"PersonalBudgetApp.h"
 
-1728839752 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionfile.cpp
+1730061658 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionfile.cpp
 	"TransactionFile.h"
 
-1728844907 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\datemethods.cpp
+1729438193 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\datemethods.cpp
 	"DateMethods.h"
 
-1728845017 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\datemethods.h
+1730060992 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\datemethods.h
 	<iostream>
 	<iostream>
 	<time.h>
@@ -86,7 +86,7 @@
 	<algorithm>
 	"AuxiliaryMethods.h"
 
-1728840235 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionmanager.h
+1730060762 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionmanager.h
 	<iostream>
 	<vector>
 	<cstdlib>
@@ -98,9 +98,9 @@
 	"AuxiliaryMethods.h"
 	"Type.h"
 
-1726940991 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transaction.h
+1726937391 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transaction.h
 
-1728835909 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionfile.h
+1730057429 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionfile.h
 	<iostream>
 	<vector>
 	<fstream>
@@ -108,12 +108,13 @@
 	<string>
 	"Transaction.h"
 	"AuxiliaryMethods.h"
+	"DateMethods.h"
 	"TextFile.h"
 	"Type.h"
 
-1726939033 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\type.h
+1726935433 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\type.h
 	<iostream>
 
-1728844915 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionmanager.cpp
+1730061233 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionmanager.cpp
 	"TransactionManager.h"
 

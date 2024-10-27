@@ -10,9 +10,9 @@
 
 #include "Transaction.h"
 #include "AuxiliaryMethods.h"
+#include "DateMethods.h"
 #include "TextFile.h"
 #include "Type.h"
-
 
 using namespace std;
 
@@ -20,13 +20,14 @@ class TransactionFile : public TextFile {
     CMarkup xmlTransactions;
 
 public:
-    TransactionFile(const string& fileName) : TextFile (fileName), currentTransactionId(0) {
+    TransactionFile(const string& fileName) : TextFile(fileName), currentTransactionId(0) {
         loadCurrentId();
     };
+    int currentTransactionId;
     bool addTransactionToFile (Transaction &transaction, const Type &type);
     vector <Transaction> loadTransactionFromFile(int loggedInUserId);
-    int currentTransactionId;
     void loadCurrentId();
+
 };
 
 #endif // TRANSACTIONFILE_H

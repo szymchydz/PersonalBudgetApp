@@ -1,51 +1,39 @@
 #include "DateMethods.h"
 
-string DateMethods::getTimeFromSystem(const std::string& format) {
-        // Pobierz obecny czas jako obiekt time_t
-        std::time_t currentTime = std::time(nullptr);
+string DateMethods::getTimeFromSystem() {
 
-        // SprawdŸ, czy pobranie czasu siê powiod³o
-        if (currentTime == -1) {
-            std::cerr << "Nie uda³o siê pobraæ obecnego czasu." << std::endl;
-            return ""; // Obs³uga b³êdu
-        }
+    char bufor [ 64 ];
+    time_t timeTakenFromComputer;
+    time( & timeTakenFromComputer );
+    tm timeTakenFromComputerTM = * localtime( & timeTakenFromComputer );
+    strftime( bufor, sizeof( bufor ), "%Y-%m-%d", & timeTakenFromComputerTM );
+    string date = bufor;
 
-        // Przekszta³æ do lokalnego czasu
-        std::tm localTime;
-#ifdef _WIN32
-        localtime_s(&localTime, &currentTime); // Dla Windows
-#else
-        localtime_r(&currentTime, &localTime); // Dla systemów POSIX
-#endif
+    return date;
+}
 
-        // Sformatuj datê
-        char buffer[100]; // Bufor do przechowywania sformatowanej daty
-        std::strftime(buffer, sizeof(buffer), format.c_str(), &localTime);
+string DateMethods::getPreviousMonthFromDate(string currentDate) {
 
-        return std::string(buffer); // Zwróæ jako std::string
+    string currentMonth, previousMonth;
+    int currentMonthInt;
+
+    currentMonth = currentDate.substr(5,2);
+    currentMonthInt = (currentMonth[0]-48)*10 + currentMonth[1] - 48;
+
+    if((currentMonthInt > 1) && (currentMonthInt <= 12)) {
+        currentMonthInt--;
+    } else if (currentMonthInt == 1) {
+        currentMonthInt = 12;
+    } else {
+        cout << "Blad daty." << endl;
     }
 
+    previousMonth = AuxiliaryMethods::convertIntToString(currentMonthInt);
 
+    if (previousMonth.size()==1)
+        previousMonth = "0" + previousMonth;
 
-int DateMethods::getYearFromDate(string date) {
-
-    int year = AuxiliaryMethods::convertStringToInt(date.substr(0,4));
-
-    return year;
-}
-
-int DateMethods::getMonthFromDate(string date) {
-
-    int month = AuxiliaryMethods::convertStringToInt(date.substr(5,2));
-
-    return month;
-}
-
-int DateMethods::getDayFromDate(string date) {
-
-    int day = AuxiliaryMethods::convertStringToInt((date.substr(8,2)));
-
-    return day;
+    return previousMonth;
 }
 
 int DateMethods::checkNumberOfDaysPerMonth(int currentYear, int currentMonth) {
@@ -80,26 +68,25 @@ int DateMethods::checkNumberOfDaysPerMonth(int currentYear, int currentMonth) {
 
 }
 
-string DateMethods::changeDateWithHypenToDateWithoutHyphen(string date) {
-        // Check if the date string is in the correct format (YYYY-MM-DD)
-        if (date.length() != 10 || date[4] != '-' || date[7] != '-') {
-            cerr << "Invalid date format. Please use YYYY-MM-DD." << endl;
-            return ""; // Return an empty string or handle the error as needed
-        }
+int DateMethods::getYearFromDate(string date) {
 
-        // Extract parts of the date and concatenate them
-        string dateWithoutHyphen = date.substr(0, 4) + date.substr(5, 2) + date.substr(8, 2);
+    int year = AuxiliaryMethods::convertStringToInt(date.substr(0,4));
 
-        return dateWithoutHyphen;
-    }
+    return year;
+}
 
-string DateMethods::changeDateWithoutHypenToDateWithHyphen(string date) {
+int DateMethods::getMonthFromDate(string date) {
 
-    string dateWithHyphen = (date.substr(0,4)) + (date.substr(4,2)) + (date.substr(6,2));
-    dateWithHyphen.insert(4, "-");
-    dateWithHyphen.insert(7, "-");
+    int month = AuxiliaryMethods::convertStringToInt(date.substr(5,2));
 
-    return dateWithHyphen;
+    return month;
+}
+
+int DateMethods::getDayFromDate(string date) {
+
+    int day = AuxiliaryMethods::convertStringToInt((date.substr(8,2)));
+
+    return day;
 }
 
 bool DateMethods::checkFormatDateIsCorrect(string date) {
@@ -112,7 +99,7 @@ bool DateMethods::checkFormatDateIsCorrect(string date) {
         day = getDayFromDate(date);
         month = getMonthFromDate(date);
 
-        currentDate = getTimeFromSystem("%Y-%m-%d");
+        currentDate = getTimeFromSystem();
         currentYear = getYearFromDate(currentDate);
         currentMonth = getMonthFromDate(currentDate);
         lastDayOfMonth = checkNumberOfDaysPerMonth(year, month);
@@ -145,45 +132,18 @@ void DateMethods::displayDate (string displayedDate) {
     }
 }
 
-string DateMethods :: getStartDate(const string& currentDate) {
-    return currentDate.substr(0, 4) + currentDate.substr(5, 2) + "01";
+string DateMethods::changeDateWithHyphenToDateWithoutHyphen(string date) {
+
+    string dateWithoutHyphen = (date.substr(0,4)) + (date.substr(5,2)) + (date.substr(8,2));
+
+    return dateWithoutHyphen;
 }
 
-string DateMethods :: getEndDate(const string& currentDate) {
-    int year = dateMethods.getYearFromDate(currentDate);
-    int month = dateMethods.getMonthFromDate(currentDate);
-    int daysInMonth = dateMethods.checkNumberOfDaysPerMonth(year, month);
-    return currentDate.substr(0, 4) + currentDate.substr(5, 2) + AuxiliaryMethods::convertIntToString(daysInMonth);
-}
+string DateMethods::changeDateWithoutHyphenToDateWithHyphen(string date) {
 
-int DateMethods::checkNumberOfDaysPerMonth(int currentYear, int currentMonth) {
+    string dateWithHyphen = (date.substr(0,4)) + (date.substr(4,2)) + (date.substr(6,2));
+    dateWithHyphen.insert(4, "-");
+    dateWithHyphen.insert(7, "-");
 
-    int lastDayOfCurrentDay;
-
-    switch (currentMonth) {
-    case 1:
-    case 3:
-    case 5:
-    case 7:
-    case 8:
-    case 10:
-    case 12:
-        lastDayOfCurrentDay = 31;
-        break;
-    case 4:
-    case 6:
-    case 9:
-    case 11:
-        lastDayOfCurrentDay = 30;
-        break;
-    case 2: {
-        if (((currentYear % 4 == 0) && (currentYear % 100 != 0)) || ((currentYear % 400 == 0)))
-            lastDayOfCurrentDay = 29;
-        else lastDayOfCurrentDay = 28;
-        break;
-    }
-
-    }
-    return lastDayOfCurrentDay;
-
+    return dateWithHyphen;
 }

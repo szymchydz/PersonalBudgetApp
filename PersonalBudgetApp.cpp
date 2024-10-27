@@ -50,20 +50,15 @@ void PersonalBudgetApp::displayCurrentMonthBalanceSheet() {
     transactionManager->displayCurrentMonthBalanceSheet();
 }
 
-/*void PersonalBudgetApp::displayPreviousMonthsBalanceSheet() {
+void PersonalBudgetApp::displayPreviousMonthsBalanceSheet() {
 
-    transactionManager->displayPreviousMonthsBalanceSheet();
+    transactionManager->displayPreviousMonthBalanceSheet();
 }
 
 void PersonalBudgetApp::displayBalanceSheetFromSelectedTimePeriod() {
 
     transactionManager->displayBalanceSheetFromSelectedTimePeriod();
 }
-
-bool PersonalBudgetApp::isUserLoggedIn() {
-
-    return userManager.isUserLoggedIn();
-}*/
 
 
 char PersonalBudgetApp::selectOptionFromMainMenu() {

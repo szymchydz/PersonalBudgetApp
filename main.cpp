@@ -43,10 +43,10 @@ int main() {
                 personalBudgetApp.displayCurrentMonthBalanceSheet();
                 break;
             case '4':
-                //personalBudgetApp.displayPreviousMonthsBalanceSheet();
+                personalBudgetApp.displayPreviousMonthsBalanceSheet();
                 break;
             case '5':
-                //personalBudgetApp.displayBalanceSheetFromSelectedTimePeriod();
+                personalBudgetApp.displayBalanceSheetFromSelectedTimePeriod();
                 break;
             case '6':
                 personalBudgetApp.changeUserPassword();

@@ -17,8 +17,10 @@ using namespace std;
 
 class TransactionManager {
     const int LOGGED_IN_USER_ID;
-    vector <Transaction> transactions;
+    vector <Transaction> incomes;
+    vector <Transaction> expenses;
     TransactionFile transactionFile;
+
     DateMethods dateMethods;
 
     Transaction addTransactionDetails(const Type &type);
@@ -32,11 +34,13 @@ class TransactionManager {
 
 
 public:
-
-    TransactionManager (string fileNameWithTransactions, int loggedInUserId)
-        : LOGGED_IN_USER_ID(loggedInUserId), transactionFile(fileNameWithTransactions) {
-       transactions = transactionFile.loadTransactionFromFile(LOGGED_IN_USER_ID);
-    };
+    TransactionManager(string fileNameWithTransactions, int loggedInUserId)
+    : LOGGED_IN_USER_ID(loggedInUserId), transactionFile(fileNameWithTransactions) {
+    cout << "Ladowanie transakcji dla uzytkownika ID: " << LOGGED_IN_USER_ID << endl;
+    incomes = transactionFile.loadTransactionFromFile(LOGGED_IN_USER_ID);
+    expenses = transactionFile.loadTransactionFromFile(LOGGED_IN_USER_ID);
+    cout << "Zaladowano " << incomes.size() << " przychodow i " << expenses.size() << " wydatkow." << endl;
+};
 
     void addIncome();
     void addExpense();

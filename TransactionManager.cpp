@@ -25,11 +25,11 @@ Transaction TransactionManager::addTransactionDetails(const Type &type) {
 
     case INCOME:
         transaction.id = transactionFile.currentTransactionId + 1;
-        typeDescription = "przychod";
+        typeDescription = "incomes";
         break;
     case EXPENSE:
         transaction.id = transactionFile.currentTransactionId +1;
-        typeDescription = "wydatek";
+        typeDescription = "expenses";
         break;
     }
 
@@ -40,7 +40,7 @@ Transaction TransactionManager::addTransactionDetails(const Type &type) {
     switch (choice) {
 
     case '1':
-        date = dateMethods.getTimeFromSystem("%Y-%m-%d");
+        date = dateMethods.getTimeFromSystem();
         break;
     case '2':
         do {
@@ -59,7 +59,7 @@ Transaction TransactionManager::addTransactionDetails(const Type &type) {
         system("pause");
         break;
     }
-    transaction.date = AuxiliaryMethods::convertStringToInt(DateMethods::changeDateWithHypenToDateWithoutHyphen(date));
+    transaction.date = AuxiliaryMethods::convertStringToInt(dateMethods.changeDateWithHyphenToDateWithoutHyphen(date));
     system("cls");
     cout << "Prosze o wpisanie czego dotyczy " << typeDescription << ": " << endl;
     transaction.item = AuxiliaryMethods::readLine();
@@ -78,13 +78,14 @@ void TransactionManager::addIncome() {
     system("cls");
     cout << " >>> DODAWANIE NOWEGO PRZYCHODU <<<" << endl << endl;
     income = addTransactionDetails(INCOME);
-    transactions.push_back(income);
+    incomes.push_back(income);
 
     if(transactionFile.addTransactionToFile(income, INCOME) == true) {
         cout << "Nowy przychod zostal dodany do pliku." << endl;
     } else
         cout << "Blad. Nie udalo sie dodac nowego przychodu do pliku." << endl;
 
+        cout << incomes.size() << endl;
     system("pause");
 }
 
@@ -95,51 +96,50 @@ void TransactionManager::addExpense() {
     system("cls");
     cout << " >>> DODAWANIE NOWEGO WYDATKU <<<" << endl << endl;
     expense = addTransactionDetails(EXPENSE);
-    transactions.push_back(expense);
+    expenses.push_back(expense);
 
-     if(transactionFile.addTransactionToFile(expense, EXPENSE) == true) {
+    if(transactionFile.addTransactionToFile(expense, EXPENSE) == true) {
         cout << "Nowy wydatek zostal dodany do pliku." << endl;
     } else
         cout << "Blad. Nie udalo sie dodac nowego wydatku do pliku." << endl;
-        system("pause");
+    system("pause");
 }
 
 void TransactionManager::sortDateIncomes() {
 
-    sort(transactions.begin(), transactions.end(), [](const Transaction& lhs, const Transaction& rhs) {
+    sort(incomes.begin(), incomes.end(), [](const Transaction& lhs, const Transaction& rhs) {
         return lhs.date < rhs.date;
     });
 }
 void TransactionManager::sortDateExpenses() {
 
-    sort(transactions.begin(), transactions.end(), [](const Transaction& lhs, const Transaction& rhs) {
+    sort(expenses.begin(), expenses.end(), [](const Transaction& lhs, const Transaction& rhs) {
         return lhs.date < rhs.date;
     });
 }
 
 string TransactionManager::displayTransactions(int number, const Type &type) {
-
     string amount;
     switch(type) {
 
     case INCOME:
         cout << "-------------------------------------------------------------" << endl;
-        cout << "Numer ID: " << transactions[number].id << endl;
+        cout << "Numer ID: " << incomes[number].id << endl;
         cout << "Data: ";
-        dateMethods.displayDate(DateMethods::changeDateWithoutHypenToDateWithHyphen(AuxiliaryMethods::convertIntToString(transactions[number].date)));
-        cout << endl << "Opis: " << transactions[number].item << endl;
-        cout << "Wartosc [PLN]: " << transactions[number].amount << endl;
-        amount = transactions[number].amount;
+        dateMethods.displayDate(DateMethods::changeDateWithoutHyphenToDateWithHyphen(AuxiliaryMethods::convertIntToString(incomes[number].date)));
+        cout << endl << "Opis: " << incomes[number].item << endl;
+        cout << "Wartosc [PLN]: " << incomes[number].amount << endl;
+        amount = incomes[number].amount;
         break;
 
     case EXPENSE:
         cout << "-------------------------------------------------------------" << endl;
-        cout << "Numer ID: " << transactions[number].id << endl;
+        cout << "Numer ID: " << expenses[number].id<< endl;
         cout << "Data: ";
-        dateMethods.displayDate(DateMethods::changeDateWithoutHypenToDateWithHyphen(AuxiliaryMethods::convertIntToString(transactions[number].date)));
-        cout << endl << "Opis: " << transactions[number].item << endl;
-        cout << "Wartosc [PLN]: " << transactions[number].amount << endl;
-        amount = transactions[number].amount;
+        dateMethods.displayDate(DateMethods::changeDateWithoutHyphenToDateWithHyphen(AuxiliaryMethods::convertIntToString(expenses[number].date)));
+        cout << endl << "Opis: " << expenses[number].item << endl;
+        cout << "Wartosc [PLN]: " << expenses[number].amount << endl;
+        amount = expenses[number].amount;
         break;
 
     }
@@ -148,49 +148,39 @@ string TransactionManager::displayTransactions(int number, const Type &type) {
 }
 
 double TransactionManager::calculateBalanceSheet(int startDate, int endDate, const Type& type) {
+    if (startDate > endDate) {
+        cout << "B³¹d: data pocz¹tkowa jest póŸniejsza ni¿ data koñcowa." << endl;
+        return 0.0;
+    }
 
-    string typeDescription;
     double sumTransactions = 0;
 
-    switch(type) {
-
-    case INCOME:
-        typeDescription = "PRZYCHODY";
-
-        if(!transactions.empty()) {
-            cout << "         <<<" << typeDescription << ">>>         " << endl;
-
-            for (int i =0; i < (int) transactions.size(); i++) {
-                if (startDate <= transactions[i].date) {
-                    if(endDate >= transactions[i].date)
-                        sumTransactions += (AuxiliaryMethods::convertStringToDouble(displayTransactions(i,INCOME)));
+    switch (type) {
+        case INCOME: {
+            cout << "         <<< PRZYCHODY >>>         " << endl;
+            for (const auto& income : incomes) {
+                if (income.date >= startDate && income.date <= endDate) {
+                    sumTransactions += income.amount;
                 }
             }
-            cout << endl;
-        } else {
-            cout << endl << typeDescription << " NIE ISTNIEJA." << endl;
+            if (sumTransactions == 0) {
+                cout << "BRAK DANYCH" << endl;
+            }
+            break;
         }
-        break;
 
-    case EXPENSE:
-        typeDescription = "WYDATKI";
-
-        if(!transactions.empty()) {
-            cout << "         <<<" << typeDescription << ">>>         " << endl;
-
-            for (int i =0; i < (int) transactions.size(); i++) {
-
-                if (startDate <= transactions[i].date) {
-                    if(endDate >= transactions[i].date) {
-                        sumTransactions+= (AuxiliaryMethods::convertStringToDouble(displayTransactions(i, EXPENSE)));
-                    }
+        case EXPENSE: {
+            cout << "         <<< WYDATKI >>>         " << endl;
+            for (const auto& expense : expenses) {
+                if (expense.date >= startDate && expense.date <= endDate) {
+                    sumTransactions += expense.amount;
                 }
             }
-            cout << endl;
-        } else {
-            cout << endl << typeDescription << " NIE ISTNIEJA." << endl;
+            if (sumTransactions == 0) {
+                cout << "BRAK DANYCH" << endl;
+            }
+            break;
         }
-        break;
     }
 
     return sumTransactions;
@@ -202,11 +192,11 @@ void TransactionManager::displayCalculateBalanceSheet(int startDate, int endDate
     sortDateExpenses();
 
     system("cls");
-    cout << "POKAZ SALDO" << endl;
-    cout << "WYBRANY PRZEDZIAL CZASOWY: " ;
-    dateMethods.displayDate(DateMethods::changeDateWithHypenToDateWithoutHyphen(AuxiliaryMethods::convertIntToString(startDate)));
-    cout << " DO " ;
-    dateMethods.displayDate(DateMethods::changeDateWithoutHypenToDateWithHyphen(AuxiliaryMethods::convertIntToString(endDate)));
+    cout << "BILANS" << endl;
+    cout << "OKRES: " ;
+    dateMethods.displayDate(dateMethods.changeDateWithoutHyphenToDateWithHyphen(AuxiliaryMethods::convertIntToString(startDate)));
+    cout << " <-> " ;
+    dateMethods.displayDate(dateMethods.changeDateWithoutHyphenToDateWithHyphen(AuxiliaryMethods::convertIntToString(endDate)));
     cout << endl << endl;
     double incomesSum = calculateBalanceSheet(startDate, endDate, INCOME);
     double expensesSum = calculateBalanceSheet(startDate, endDate, EXPENSE);
@@ -221,17 +211,60 @@ void TransactionManager::displayCalculateBalanceSheet(int startDate, int endDate
 
 void TransactionManager::displayCurrentMonthBalanceSheet() {
 
-string currentDate = dateMethods.getTimeFromSystem("%Y-%m-%d");
-    cout << "Current Date: " << currentDate << endl;
-
-    string startDate = dateMethods.getStartDate(currentDate);
-    cout << "Start Date: " << startDate << endl;
-
-    string endDate = dateMethods.getEndDate(currentDate);
-    cout << "End Date: " << endDate << endl;
-
-    displayCalculateBalanceSheet(AuxiliaryMethods::convertStringToInt(startDate),
-                                 AuxiliaryMethods::convertStringToInt(endDate));
+    string currentDate = dateMethods.getTimeFromSystem();
+    string startDate =  (currentDate.substr(0,4) + currentDate.substr(5,2) + "01");
+    string endDate = (currentDate.substr(0,4) + currentDate.substr(5,2) + AuxiliaryMethods::convertIntToString(dateMethods.checkNumberOfDaysPerMonth(dateMethods.getYearFromDate(currentDate),dateMethods.getMonthFromDate(currentDate))));
+    displayCalculateBalanceSheet(AuxiliaryMethods::convertStringToInt(startDate), AuxiliaryMethods::convertStringToInt(endDate));
 
     system("pause");
+
+}
+
+void TransactionManager::displayPreviousMonthBalanceSheet() {
+
+    string currentDate = dateMethods.getTimeFromSystem();
+    string previousMonth = dateMethods.getPreviousMonthFromDate(currentDate);
+
+    if (previousMonth=="12") {
+        if (currentDate[3]=='0') {
+            currentDate[2]--;
+            currentDate[3]='9';
+        } else
+            currentDate[3]--;
+    }
+    string startDate = (currentDate.substr(0,4) + previousMonth + "01");
+    string endDate = (currentDate.substr(0,4) + previousMonth + AuxiliaryMethods::convertIntToString(dateMethods.checkNumberOfDaysPerMonth(dateMethods.getYearFromDate(currentDate),AuxiliaryMethods::convertStringToInt(previousMonth))));
+
+    displayCalculateBalanceSheet(AuxiliaryMethods::convertStringToInt(startDate), AuxiliaryMethods::convertStringToInt(endDate));
+
+    system("pause");
+}
+
+void TransactionManager::displayBalanceSheetFromSelectedTimePeriod() {
+
+    string enteredStartDate, enteredEndDate;
+
+    do {
+        cout << "Wprowadz date w formacie rrrr-mm-dd od ktorej chcesz rozpoczac bilans." << endl;
+        cout << "Data musi miescic sie w zakresie czasowym od 2000-01-01 do maksymalnie ostatniego dnia biezacego miesiaca. " << endl;
+        enteredStartDate = AuxiliaryMethods::readLine();
+        if (dateMethods.checkFormatDateIsCorrect(enteredStartDate) == false)
+            cout << "Niepoprawny format daty lub niepoprawnie podany zakres czasowy." << endl;
+
+    } while(dateMethods.checkFormatDateIsCorrect(enteredStartDate) == false);
+
+    do {
+        cout << "Wprowadz date w formacie rrrr-mm-dd do ktorej chcesz zakonczyc bilans. " << endl;
+        cout << "Data musi miescic sie w zakresie czasowym od 2000-01-01 do maksymalnie ostatniego dnia biezacego miesiaca. " << endl;
+        enteredEndDate = AuxiliaryMethods::readLine();
+        if (dateMethods.checkFormatDateIsCorrect(enteredEndDate) == false)
+        cout << endl;
+        cout << "Niepoprawny format daty lub niepoprawnie podany zakres czasowy." << endl;
+
+
+    } while(dateMethods.checkFormatDateIsCorrect(enteredEndDate) == false);
+
+    displayCalculateBalanceSheet(AuxiliaryMethods::convertStringToInt(DateMethods::changeDateWithHyphenToDateWithoutHyphen(enteredStartDate)), AuxiliaryMethods::convertStringToInt(DateMethods::changeDateWithHyphenToDateWithoutHyphen(enteredEndDate)));
+    system("pause");
+
 }

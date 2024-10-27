@@ -33,8 +33,8 @@ public:
     void addIncome();
     void addExpense();
     void displayCurrentMonthBalanceSheet();
-    /*void displayPreviousMonthsBalanceSheet();
-    void displayBalanceSheetFromSelectedTimePeriod();*/
+    void displayPreviousMonthsBalanceSheet();
+    void displayBalanceSheetFromSelectedTimePeriod();
 
     char selectOptionFromMainMenu();
     char selectOptionFromBudgetMenu();
