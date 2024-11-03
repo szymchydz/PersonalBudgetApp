@@ -1,71 +1,53 @@
 #include "DateMethods.h"
 
 string DateMethods::getTimeFromSystem() {
+    time_t currentTime = time(nullptr);
 
-    char bufor [ 64 ];
-    time_t timeTakenFromComputer;
-    time( & timeTakenFromComputer );
-    tm timeTakenFromComputerTM = * localtime( & timeTakenFromComputer );
-    strftime( bufor, sizeof( bufor ), "%Y-%m-%d", & timeTakenFromComputerTM );
-    string date = bufor;
+    tm localTime = *localtime(&currentTime);
 
-    return date;
+    char buffer[11];
+    if (strftime(buffer, sizeof(buffer), "%Y-%m-%d", &localTime) == 0) {
+        cerr << "Blad formatu daty." << endl;
+        return "";
+    }
+    return string(buffer);
 }
-
 string DateMethods::getPreviousMonthFromDate(string currentDate) {
+    if (currentDate.size() != 10 || currentDate[4] != '-' || currentDate[7] != '-') {
+        cout << "Bledny format" << endl;
+        return "";
+    }
+    int currentMonthInt = stoi(currentDate.substr(5, 2));
 
-    string currentMonth, previousMonth;
-    int currentMonthInt;
-
-    currentMonth = currentDate.substr(5,2);
-    currentMonthInt = (currentMonth[0]-48)*10 + currentMonth[1] - 48;
-
-    if((currentMonthInt > 1) && (currentMonthInt <= 12)) {
-        currentMonthInt--;
-    } else if (currentMonthInt == 1) {
+    if (currentMonthInt == 1) {
         currentMonthInt = 12;
+    } else if (currentMonthInt >= 2 && currentMonthInt <= 12) {
+        currentMonthInt--;
     } else {
         cout << "Blad daty." << endl;
+        return "";
     }
-
-    previousMonth = AuxiliaryMethods::convertIntToString(currentMonthInt);
-
-    if (previousMonth.size()==1)
-        previousMonth = "0" + previousMonth;
-
-    return previousMonth;
+    stringstream previousMonthStream;
+    previousMonthStream << setw(2) << setfill('0') << currentMonthInt;
+    return previousMonthStream.str();
 }
 
 int DateMethods::checkNumberOfDaysPerMonth(int currentYear, int currentMonth) {
+    if (currentMonth < 1 || currentMonth > 12) {
+        return -1;
+    }
 
-    int lastDayOfCurrentDay;
+    int daysInMonth[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-    switch (currentMonth) {
-    case 1:
-    case 3:
-    case 5:
-    case 7:
-    case 8:
-    case 10:
-    case 12:
-        lastDayOfCurrentDay = 31;
-        break;
-    case 4:
-    case 6:
-    case 9:
-    case 11:
-        lastDayOfCurrentDay = 30;
-        break;
-    case 2: {
-        if (((currentYear % 4 == 0) && (currentYear % 100 != 0)) || ((currentYear % 400 == 0)))
+    int lastDayOfCurrentDay = daysInMonth[currentMonth];
+
+    if (currentMonth == 2) {
+        if ((currentYear % 4 == 0 && currentYear % 100 != 0) || (currentYear % 400 == 0)) {
             lastDayOfCurrentDay = 29;
-        else lastDayOfCurrentDay = 28;
-        break;
+        }
     }
 
-    }
     return lastDayOfCurrentDay;
-
 }
 
 int DateMethods::getYearFromDate(string date) {
@@ -90,60 +72,64 @@ int DateMethods::getDayFromDate(string date) {
 }
 
 bool DateMethods::checkFormatDateIsCorrect(string date) {
-
-    if ((date[4]=='-') && (date[7]=='-') && date.size()==10) {
-        int year, month, day, lastDayOfMonth, currentYear, currentMonth;
-        string currentDate;
-
-        year = getYearFromDate(date);
-        day = getDayFromDate(date);
-        month = getMonthFromDate(date);
-
-        currentDate = getTimeFromSystem();
-        currentYear = getYearFromDate(currentDate);
-        currentMonth = getMonthFromDate(currentDate);
-        lastDayOfMonth = checkNumberOfDaysPerMonth(year, month);
-
-        if ((year >= 2000) && (year <= currentYear)) {
-            if ((month >= 1) && (month <= 12)) {
-                if ((day >= 1) && (day <= lastDayOfMonth)) {
-                    if (year == currentYear) {
-                        if (month > currentMonth)
-                            return false;
-                    }
-                    return true;
-                }
-            }
-        }
+    if (date.size() != 10 || date[4] != '-' || date[7] != '-') {
+        return false;
     }
-    return false;
+
+    int year = getYearFromDate(date);
+    int month = getMonthFromDate(date);
+    int day = getDayFromDate(date);
+
+    string currentDate = getTimeFromSystem();
+    int currentYear = getYearFromDate(currentDate);
+    int currentMonth = getMonthFromDate(currentDate);
+
+    if (year < 2000 || year > currentYear) {
+        return false;
+    }
+
+    if (month < 1 || month > 12) {
+        return false;
+    }
+
+    int lastDayOfMonth = checkNumberOfDaysPerMonth(year, month);
+
+    if (day < 1 || day > lastDayOfMonth) {
+        return false;
+    }
+
+    if (year == currentYear && month > currentMonth) {
+        return false;
+    }
+
+    return true;
 }
 
-void DateMethods::displayDate (string displayedDate) {
+void DateMethods::displayDate(string displayedDate) {
+    if (displayedDate.size() != 10 || displayedDate[4] != '-' || displayedDate[7] != '-') {
+        cout << "Invalid date format" << endl;
+        return;
+    }
 
-    for (int i = 8; i <= 9; i++) {
-        cout << displayedDate[i];
-    }
-    for (int i = 4; i <= 7; i++) {
-        cout << displayedDate[i];
-    }
-    for (int i = 0; i <= 3; i++) {
-        cout << displayedDate[i];
-    }
+    cout << displayedDate.substr(8, 2) << '-'
+         << displayedDate.substr(5, 2) << '-'
+         << displayedDate.substr(0, 4) << endl;
 }
-
 string DateMethods::changeDateWithHyphenToDateWithoutHyphen(string date) {
-
-    string dateWithoutHyphen = (date.substr(0,4)) + (date.substr(5,2)) + (date.substr(8,2));
+    if (date.size() != 10 || date[4] != '-' || date[7] != '-') {
+        return "";
+    }
+    string dateWithoutHyphen = date.substr(0, 4) + date.substr(5, 2) + date.substr(8, 2);
 
     return dateWithoutHyphen;
 }
 
 string DateMethods::changeDateWithoutHyphenToDateWithHyphen(string date) {
+    if (date.size() != 8) {
+        return "";
+    }
 
-    string dateWithHyphen = (date.substr(0,4)) + (date.substr(4,2)) + (date.substr(6,2));
-    dateWithHyphen.insert(4, "-");
-    dateWithHyphen.insert(7, "-");
+    string dateWithHyphen = date.substr(0, 4) + "-" + date.substr(4, 2) + "-" + date.substr(6, 2);
 
     return dateWithHyphen;
 }

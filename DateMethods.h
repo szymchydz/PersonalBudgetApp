@@ -2,7 +2,6 @@
 #define DATEMETHODS_H
 
 #include <iostream>
-#include <iostream>
 #include <time.h>
 #include <ctime>
 #include <cstdio>

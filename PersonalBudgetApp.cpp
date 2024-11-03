@@ -40,24 +40,34 @@ void PersonalBudgetApp :: addExpense() {
     if(userManager.isUserLoggedIn()) {
         transactionManager->addExpense();
     } else {
-        cout << "Aby dodac zarobek, nalezy najpierw sie zalogowac." << endl;
+        cout << "Aby dodac wydatek, nalezy najpierw sie zalogowac." << endl;
         system("pause");
     }
 }
 
 void PersonalBudgetApp::displayCurrentMonthBalanceSheet() {
-
-    transactionManager->displayCurrentMonthBalanceSheet();
+if (userManager.isUserLoggedIn()) {
+        transactionManager->displayCurrentMonthBalanceSheet();
+    } else {
+        cout << "Musisz sie najpierw zalogowac" << endl;
+    }
 }
 
 void PersonalBudgetApp::displayPreviousMonthsBalanceSheet() {
-
-    transactionManager->displayPreviousMonthBalanceSheet();
+if (userManager.isUserLoggedIn()) {
+        transactionManager->displayPreviousMonthBalanceSheet();
+    } else {
+        cout << "Musisz sie najpierw zalogowac" << endl;
+    }
 }
 
 void PersonalBudgetApp::displayBalanceSheetFromSelectedTimePeriod() {
+if (userManager.isUserLoggedIn()) {
+        transactionManager->displayBalanceSheetFromSelectedTimePeriod();
+    } else {
+        cout << "Musisz sie najpierw zalogowac" << endl;
+    }
 
-    transactionManager->displayBalanceSheetFromSelectedTimePeriod();
 }
 
 

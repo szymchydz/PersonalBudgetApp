@@ -6,6 +6,7 @@
 
 #include "UserManager.h"
 #include "TransactionManager.h"
+#include "AuxiliaryMethods.h"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ class PersonalBudgetApp {
     const string FILE_NAME_WITH_TRANSACTIONS;
 
 public:
+
     PersonalBudgetApp(const string& fileNameWithUsers, const string& fileNameWithTransactions)
         : userManager(fileNameWithUsers), FILE_NAME_WITH_TRANSACTIONS(fileNameWithTransactions) {
     };

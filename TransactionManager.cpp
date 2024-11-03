@@ -68,7 +68,6 @@ Transaction TransactionManager::addTransactionDetails(const Type &type) {
     transaction.amount = stod(AuxiliaryMethods::validateInput(AuxiliaryMethods::readLine()));
 
     return transaction;
-
 }
 
 void TransactionManager::addIncome() {
@@ -85,7 +84,7 @@ void TransactionManager::addIncome() {
     } else
         cout << "Blad. Nie udalo sie dodac nowego przychodu do pliku." << endl;
 
-        cout << incomes.size() << endl;
+    cout << incomes.size() << endl;
     system("pause");
 }
 
@@ -129,84 +128,94 @@ string TransactionManager::displayTransactions(int number, const Type &type) {
         dateMethods.displayDate(DateMethods::changeDateWithoutHyphenToDateWithHyphen(AuxiliaryMethods::convertIntToString(incomes[number].date)));
         cout << endl << "Opis: " << incomes[number].item << endl;
         cout << "Wartosc [PLN]: " << incomes[number].amount << endl;
-        amount = incomes[number].amount;
+        cout << endl;
+        amount = to_string(incomes[number].amount);
         break;
 
     case EXPENSE:
         cout << "-------------------------------------------------------------" << endl;
-        cout << "Numer ID: " << expenses[number].id<< endl;
+        cout << "Numer ID: " << expenses[number].id << endl;
         cout << "Data: ";
         dateMethods.displayDate(DateMethods::changeDateWithoutHyphenToDateWithHyphen(AuxiliaryMethods::convertIntToString(expenses[number].date)));
         cout << endl << "Opis: " << expenses[number].item << endl;
         cout << "Wartosc [PLN]: " << expenses[number].amount << endl;
-        amount = expenses[number].amount;
+        cout << endl;
+        amount = to_string(expenses[number].amount);
         break;
 
     }
     return amount;
-
 }
 
 double TransactionManager::calculateBalanceSheet(int startDate, int endDate, const Type& type) {
     if (startDate > endDate) {
-        cout << "B³¹d: data pocz¹tkowa jest póŸniejsza ni¿ data koñcowa." << endl;
+        cout << "Blad! Data poczatkowa jest pozniejsza niÅ¼ data koncowa." << endl;
         return 0.0;
     }
 
-    double sumTransactions = 0;
+    double sumTransactions = 0.0;
+    bool hasTransactions = false;
 
     switch (type) {
-        case INCOME: {
-            cout << "         <<< PRZYCHODY >>>         " << endl;
-            for (const auto& income : incomes) {
-                if (income.date >= startDate && income.date <= endDate) {
-                    sumTransactions += income.amount;
-                }
+    case INCOME: {
+        cout << "<<< PRZYCHODY >>>" << endl;
+        for (size_t i = 0; i < incomes.size(); ++i) {
+            if (startDate <= incomes[i].date && endDate >= incomes[i].date) {
+                hasTransactions = true;
+                string transactionString = displayTransactions(i, INCOME);
+                double transactionValue = AuxiliaryMethods::convertStringToDouble(transactionString);
+                sumTransactions += transactionValue;
             }
-            if (sumTransactions == 0) {
-                cout << "BRAK DANYCH" << endl;
-            }
-            break;
         }
-
-        case EXPENSE: {
-            cout << "         <<< WYDATKI >>>         " << endl;
-            for (const auto& expense : expenses) {
-                if (expense.date >= startDate && expense.date <= endDate) {
-                    sumTransactions += expense.amount;
-                }
-            }
-            if (sumTransactions == 0) {
-                cout << "BRAK DANYCH" << endl;
-            }
-            break;
+        if (!hasTransactions) {
+            cout << endl << "BRAK PRZYCHODOW !!" << endl << endl;
         }
+        break;
+    }
+    case EXPENSE: {
+        cout << "<<< WYDATKI >>>" << endl;
+        for (size_t i = 0; i < expenses.size(); ++i) {
+            if (startDate <= expenses[i].date && endDate >= expenses[i].date) {
+                hasTransactions = true;
+                string transactionString = displayTransactions(i, EXPENSE);
+                double transactionValue = AuxiliaryMethods::convertStringToDouble(transactionString);
+                sumTransactions += transactionValue;
+            }
+        }
+        if (!hasTransactions) {
+            cout << endl << "BRAK WYDATKOW !!" << endl << endl;
+        }
+        break;
+    }
+    default:
+        cout <<  "NieprawidÅ‚owy typ transakcji." << endl;
+        return 0.0;
     }
 
     return sumTransactions;
 }
 
 void TransactionManager::displayCalculateBalanceSheet(int startDate, int endDate) {
-
     sortDateIncomes();
     sortDateExpenses();
 
     system("cls");
     cout << "BILANS" << endl;
-    cout << "OKRES: " ;
+    cout << "OKRES: ";
     dateMethods.displayDate(dateMethods.changeDateWithoutHyphenToDateWithHyphen(AuxiliaryMethods::convertIntToString(startDate)));
-    cout << " <-> " ;
+    cout << " <-> ";
     dateMethods.displayDate(dateMethods.changeDateWithoutHyphenToDateWithHyphen(AuxiliaryMethods::convertIntToString(endDate)));
     cout << endl << endl;
+
     double incomesSum = calculateBalanceSheet(startDate, endDate, INCOME);
     double expensesSum = calculateBalanceSheet(startDate, endDate, EXPENSE);
 
     cout << "-------------------------------------------------------------------" << endl;
     cout << "Suma przychodow w wybranym przedziale czasowym: " << incomesSum << " PLN." << endl;
-    cout << "Suma wydatkow w wybranym przedziale czasowym: " << expensesSum << " PLN." <<endl;
+    cout << "Suma wydatkow w wybranym przedziale czasowym: " << expensesSum << " PLN." << endl;
     cout << "Saldo w wybranym przedziale czasowym: " << incomesSum - expensesSum << " PLN." << endl;
-
 }
+
 
 
 void TransactionManager::displayCurrentMonthBalanceSheet() {
@@ -217,7 +226,6 @@ void TransactionManager::displayCurrentMonthBalanceSheet() {
     displayCalculateBalanceSheet(AuxiliaryMethods::convertStringToInt(startDate), AuxiliaryMethods::convertStringToInt(endDate));
 
     system("pause");
-
 }
 
 void TransactionManager::displayPreviousMonthBalanceSheet() {
@@ -254,11 +262,11 @@ void TransactionManager::displayBalanceSheetFromSelectedTimePeriod() {
     } while(dateMethods.checkFormatDateIsCorrect(enteredStartDate) == false);
 
     do {
-        cout << "Wprowadz date w formacie rrrr-mm-dd do ktorej chcesz zakonczyc bilans. " << endl;
+        cout << "Wprowadz date w formacie rrrr-mm-dd na ktorej chcesz zakonczyc bilans. " << endl;
         cout << "Data musi miescic sie w zakresie czasowym od 2000-01-01 do maksymalnie ostatniego dnia biezacego miesiaca. " << endl;
         enteredEndDate = AuxiliaryMethods::readLine();
         if (dateMethods.checkFormatDateIsCorrect(enteredEndDate) == false)
-        cout << endl;
+            cout << endl;
         cout << "Niepoprawny format daty lub niepoprawnie podany zakres czasowy." << endl;
 
 

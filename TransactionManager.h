@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <string>
+#include <sstream>
 
 #include "Transaction.h"
 #include "TransactionFile.h"
@@ -37,9 +38,11 @@ public:
     TransactionManager(string fileNameWithTransactions, int loggedInUserId)
     : LOGGED_IN_USER_ID(loggedInUserId), transactionFile(fileNameWithTransactions) {
     cout << "Ladowanie transakcji dla uzytkownika ID: " << LOGGED_IN_USER_ID << endl;
+    cout << "Id zalogowanego uzytkownika: " << loggedInUserId << endl;
     incomes = transactionFile.loadTransactionFromFile(LOGGED_IN_USER_ID);
     expenses = transactionFile.loadTransactionFromFile(LOGGED_IN_USER_ID);
     cout << "Zaladowano " << incomes.size() << " przychodow i " << expenses.size() << " wydatkow." << endl;
+    system ("pause");
 };
 
     void addIncome();

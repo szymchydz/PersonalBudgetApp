@@ -1,19 +1,16 @@
 #include "AuxiliaryMethods.h"
 
-char AuxiliaryMethods :: getchar() {
-    string input = "";
-    char sign  = {0};
+char AuxiliaryMethods::getchar() {
+    string input;
 
     while (true) {
         getline(cin, input);
 
         if (input.length() == 1) {
-            sign = input[0];
-            break;
+            return input[0];
         }
-        cout << "To nie jest pojedynczy znak. Wpisz ponownie." << endl;
+        cout << "To nie jest pojedynczy znak. Sprobuj ponownie." << endl;
     }
-    return sign;
 }
 
 string AuxiliaryMethods :: readLine() {
@@ -29,7 +26,6 @@ int AuxiliaryMethods::convertStringToInt(string number) {
     iss >> numberInt;
 
     return numberInt;
-
 }
 
 string AuxiliaryMethods :: validateInput (string input) {
@@ -45,7 +41,6 @@ int sizeOfAmount = input.size();
             return input;
         }
     }
-
     return input;
 }
 

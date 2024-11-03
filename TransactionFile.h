@@ -13,6 +13,7 @@
 #include "DateMethods.h"
 #include "TextFile.h"
 #include "Type.h"
+#include "Markup.h"
 
 using namespace std;
 
