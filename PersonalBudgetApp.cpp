@@ -1,52 +1,60 @@
 #include "PersonalBudgetApp.h"
 
+PersonalBudgetApp::PersonalBudgetApp(const string &fileNameWithUsers, const string &fileNameWithTransactions)
+    : userManager(fileNameWithUsers), FILE_NAME_WITH_TRANSACTIONS(fileNameWithTransactions), transactionManager(nullptr) {}
 
-void PersonalBudgetApp :: registerNewUser() {
+PersonalBudgetApp::~PersonalBudgetApp() {
+    delete transactionManager;
+}
+
+void PersonalBudgetApp::registerNewUser() {
     userManager.addUser();
 }
 
-void PersonalBudgetApp :: loginUser() {
-
+void PersonalBudgetApp::loginUser() {
     userManager.loginUser();
     if (userManager.isUserLoggedIn()) {
-        transactionManager = new TransactionManager (FILE_NAME_WITH_TRANSACTIONS, userManager.getLoggedInUserId());
-    }
-}
-
-bool PersonalBudgetApp :: isUserLoggedIn() {
-    userManager.isUserLoggedIn();
-}
-
-void PersonalBudgetApp :: logoutUser() {
-
-    userManager.logoutUser();
-    delete transactionManager;
-    transactionManager = NULL;
-}
-
-void PersonalBudgetApp :: changeUserPassword() {
-    userManager.changeUserPassword();
-}
-
-void PersonalBudgetApp :: addIncome() {
-    if(userManager.isUserLoggedIn()) {
-        transactionManager->addIncome();
-    } else {
-        cout << "Aby dodac zarobek, nalezy najpierw sie zalogowac." << endl;
+        transactionManager = new TransactionManager(FILE_NAME_WITH_TRANSACTIONS, userManager.getLoggedInUserId());
+        cout << "Liczba przychodow: " << transactionManager->getIncomes().size() << endl;
+        cout << "Liczba wydatkow: " << transactionManager->getExpenses().size() << endl;
         system("pause");
     }
 }
-void PersonalBudgetApp :: addExpense() {
+
+bool PersonalBudgetApp::isUserLoggedIn() {
+    return userManager.isUserLoggedIn();
+}
+
+void PersonalBudgetApp::logoutUser() {
+    userManager.logoutUser();
+    delete transactionManager;
+    transactionManager = nullptr;
+}
+
+void PersonalBudgetApp::changeUserPassword() {
+    userManager.changeUserPassword();
+}
+
+void PersonalBudgetApp::addIncome() {
+    if(userManager.isUserLoggedIn()) {
+        transactionManager->addIncome();
+    } else {
+        cout << "Aby dodac zarobek, nalezy najpierw siê zalogowac." << endl;
+        system("pause");
+    }
+}
+
+void PersonalBudgetApp::addExpense() {
     if(userManager.isUserLoggedIn()) {
         transactionManager->addExpense();
     } else {
-        cout << "Aby dodac wydatek, nalezy najpierw sie zalogowac." << endl;
+        cout << "Aby dodac wydatek, nalezy najpierw siê zalogowac." << endl;
         system("pause");
     }
 }
 
 void PersonalBudgetApp::displayCurrentMonthBalanceSheet() {
-if (userManager.isUserLoggedIn()) {
+    if (userManager.isUserLoggedIn()) {
         transactionManager->displayCurrentMonthBalanceSheet();
     } else {
         cout << "Musisz sie najpierw zalogowac" << endl;
@@ -54,7 +62,7 @@ if (userManager.isUserLoggedIn()) {
 }
 
 void PersonalBudgetApp::displayPreviousMonthsBalanceSheet() {
-if (userManager.isUserLoggedIn()) {
+    if (userManager.isUserLoggedIn()) {
         transactionManager->displayPreviousMonthBalanceSheet();
     } else {
         cout << "Musisz sie najpierw zalogowac" << endl;
@@ -62,21 +70,17 @@ if (userManager.isUserLoggedIn()) {
 }
 
 void PersonalBudgetApp::displayBalanceSheetFromSelectedTimePeriod() {
-if (userManager.isUserLoggedIn()) {
+    if (userManager.isUserLoggedIn()) {
         transactionManager->displayBalanceSheetFromSelectedTimePeriod();
     } else {
         cout << "Musisz sie najpierw zalogowac" << endl;
     }
-
 }
 
-
 char PersonalBudgetApp::selectOptionFromMainMenu() {
-
     char choice;
-
     system("cls");
-    cout << "    >>> MENU  GLOWNE <<<" << endl;
+    cout << "    >>> MENU GLOWNE <<<" << endl;
     cout << "---------------------------" << endl;
     cout << "1. Rejestracja" << endl;
     cout << "2. Logowanie" << endl;
@@ -84,16 +88,13 @@ char PersonalBudgetApp::selectOptionFromMainMenu() {
     cout << "---------------------------" << endl;
     cout << "Twoj wybor: ";
     choice = AuxiliaryMethods::getchar();
-
     return choice;
 }
 
 char PersonalBudgetApp::selectOptionFromBudgetMenu() {
-
     char choice;
-
     system("cls");
-    cout << " >>> MENU UZYTKOWNIKA <<<" << endl;
+    cout << " >>> MENU U¯YTKOWNIKA <<<" << endl;
     cout << "---------------------------" << endl;
     cout << "1. Dodaj przychod" << endl;
     cout << "2. Dodaj wydatek" << endl;
@@ -106,6 +107,5 @@ char PersonalBudgetApp::selectOptionFromBudgetMenu() {
     cout << "---------------------------" << endl;
     cout << "Twoj wybor: ";
     choice = AuxiliaryMethods::getchar();
-
     return choice;
 }

@@ -1,12 +1,10 @@
 #include <iostream>
-
 #include "PersonalBudgetApp.h"
 
 using namespace std;
 
 int main() {
-
-    PersonalBudgetApp personalBudgetApp ("users.xml", "transaction.xml");
+    PersonalBudgetApp personalBudgetApp("users.xml", "transaction.xml");
 
     char choice;
 
@@ -54,12 +52,12 @@ int main() {
             case '7':
                 personalBudgetApp.logoutUser();
                 break;
+            default:
+                cout << endl << "Nie ma takiej opcji w menu." << endl << endl;
+                system("pause");
+                break;
             }
         }
     }
     return 0;
-
 }
-
-
-

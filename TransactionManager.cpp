@@ -1,5 +1,8 @@
 #include "TransactionManager.h"
 
+TransactionManager::TransactionManager(const string& fileNameWithTransactions, int loggedInUserId)
+    : LOGGED_IN_USER_ID(loggedInUserId),
+      transactionFile(fileNameWithTransactions) {}
 
 char TransactionManager::selectOptionFromDateMenu() {
 
@@ -24,11 +27,11 @@ Transaction TransactionManager::addTransactionDetails(const Type &type) {
     switch(type) {
 
     case INCOME:
-        transaction.id = transactionFile.currentTransactionId + 1;
+        transaction.id = transactionFile.getCurrentTransactionId() + 1;
         typeDescription = "incomes";
         break;
     case EXPENSE:
-        transaction.id = transactionFile.currentTransactionId +1;
+        transaction.id = transactionFile.getCurrentTransactionId() +1;
         typeDescription = "expenses";
         break;
     }
@@ -71,38 +74,35 @@ Transaction TransactionManager::addTransactionDetails(const Type &type) {
 }
 
 void TransactionManager::addIncome() {
-
     Transaction income;
-
     system("cls");
-    cout << " >>> DODAWANIE NOWEGO PRZYCHODU <<<" << endl << endl;
+    cout << ">>> DODAWANIE NOWEGO PRZYCHODU <<<" << endl << endl;
     income = addTransactionDetails(INCOME);
     incomes.push_back(income);
 
-    if(transactionFile.addTransactionToFile(income, INCOME) == true) {
+    if (transactionFile.addTransactionToFile(income, INCOME)) {
         cout << "Nowy przychod zostal dodany do pliku." << endl;
-    } else
-        cout << "Blad. Nie udalo sie dodac nowego przychodu do pliku." << endl;
-
-    cout << incomes.size() << endl;
+    } else {
+        cout << "Blad. Nie udało się dodac nowego przychodu do pliku." << endl;
+    }
     system("pause");
 }
 
 void TransactionManager::addExpense() {
-
     Transaction expense;
-
     system("cls");
-    cout << " >>> DODAWANIE NOWEGO WYDATKU <<<" << endl << endl;
+    cout << ">>> DODAWANIE NOWEGO WYDATKU <<<" << endl << endl;
     expense = addTransactionDetails(EXPENSE);
     expenses.push_back(expense);
 
-    if(transactionFile.addTransactionToFile(expense, EXPENSE) == true) {
+    if (transactionFile.addTransactionToFile(expense, EXPENSE)) {
         cout << "Nowy wydatek zostal dodany do pliku." << endl;
-    } else
-        cout << "Blad. Nie udalo sie dodac nowego wydatku do pliku." << endl;
+    } else {
+        cout << "Blad. Nie udało się dodac nowego wydatku do pliku." << endl;
+    }
     system("pause");
 }
+
 
 void TransactionManager::sortDateIncomes() {
 
@@ -149,7 +149,7 @@ string TransactionManager::displayTransactions(int number, const Type &type) {
 
 double TransactionManager::calculateBalanceSheet(int startDate, int endDate, const Type& type) {
     if (startDate > endDate) {
-        cout << "Blad! Data poczatkowa jest pozniejsza niż data koncowa." << endl;
+        cout << "Blad! Data poczatkowa jest pozniejsza niz data koncowa." << endl;
         return 0.0;
     }
 
