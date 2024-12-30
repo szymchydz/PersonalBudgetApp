@@ -17,17 +17,18 @@ class DateMethods
 {
 
 public:
-
     string getTimeFromSystem();
-    string getPreviousMonthFromDate(string currentDate);
     int checkNumberOfDaysPerMonth(int currentYear, int currentMonth);
-    int getYearFromDate(string date);
-    int getMonthFromDate(string date);
-    int getDayFromDate(string date);
-    bool checkFormatDateIsCorrect(string date);
-    static string changeDateWithHyphenToDateWithoutHyphen(string date);
-    static string changeDateWithoutHyphenToDateWithHyphen(string date);
-    void displayDate(string displayedDate);
+    bool checkFormatDateIsCorrect(const string& date);
+    static string changeDateWithHyphenToDateWithoutHyphen(const string& date);
+    static string changeDateWithoutHyphenToDateWithHyphen(const string& date);
+    void displayDate(const string& displayedDate);
+    int getYearFromDate(const string& date);
+    int getMonthFromDate(const string& date);
+    string getPreviousMonthFromDate(const string& currentDate);
+
+private:
+    bool isLeapYear(int year);
 };
 
 #endif // DATEMETHODS_H

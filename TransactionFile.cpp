@@ -1,7 +1,10 @@
 #include "TransactionFile.h"
 
 void TransactionFile::loadCurrentId() {
-    vector<Transaction> transactions = loadTransactionFromFile(-1);
+    string incomesFileName = "incomes.xml";
+    string expensesFileName = "expenses.xml";
+
+    vector<Transaction> transactions = loadTransactionFromFiles(-1, incomesFileName, expensesFileName);
     if (!transactions.empty()) {
         currentTransactionId = transactions.back().id;
     } else {
@@ -58,88 +61,76 @@ bool TransactionFile::addTransactionToFile(Transaction &transaction, const Type 
     }
 }
 
-vector<Transaction> TransactionFile::loadTransactionFromFile(int loggedInUserId) {
-
+vector<Transaction> TransactionFile::loadTransactionFromFiles(int loggedInUserId, const string& incomesFileName, const string& expensesFileName) {
     vector<Transaction> transactions;
-    bool fileExists = xmlTransactions.Load(getFileName());
 
-  if (fileExists) {
-    xmlTransactions.ResetPos();
-    xmlTransactions.FindElem();
-
-    while (xmlTransactions.FindElem("Incomes")) {
-        cout << "Znaleziono sekcję Incomes" << endl;
-        xmlTransactions.IntoElem();
-
-        while (xmlTransactions.FindElem("Transaction")) {
-            cout << "Znaleziono transakcję w Incomes" << endl;
+    bool fileExists = xmlTransactions.Load(incomesFileName);
+    if (fileExists) {
+        xmlTransactions.ResetPos();
+        xmlTransactions.FindElem();
+        while (xmlTransactions.FindElem("Incomes")) {
             xmlTransactions.IntoElem();
-
-            xmlTransactions.FindChildElem("UserId");
-            int userId = atoi(xmlTransactions.GetChildData().c_str());
-            cout << "Znaleziono UserId: " << userId << endl;
-
-            if (userId == loggedInUserId) {
-                Transaction transaction;
-                if (xmlTransactions.FindChildElem("TransactionId")) {
-                    transaction.id = atoi(xmlTransactions.GetChildData().c_str());
+            while (xmlTransactions.FindElem("Transaction")) {
+                xmlTransactions.IntoElem();
+                xmlTransactions.FindChildElem("UserId");
+                int userId = atoi(xmlTransactions.GetChildData().c_str());
+                if (userId == loggedInUserId) {
+                    Transaction transaction;
+                    if (xmlTransactions.FindChildElem("TransactionId")) {
+                        transaction.id = atoi(xmlTransactions.GetChildData().c_str());
+                    }
+                    if (xmlTransactions.FindChildElem("Date")) {
+                        transaction.date = atoi(xmlTransactions.GetChildData().c_str());
+                    }
+                    if (xmlTransactions.FindChildElem("Item")) {
+                        transaction.item = xmlTransactions.GetChildData();
+                    }
+                    if (xmlTransactions.FindChildElem("Amount")) {
+                        transaction.amount = atof(xmlTransactions.GetChildData().c_str());
+                    }
+                    transactions.push_back(transaction);
                 }
-                if (xmlTransactions.FindChildElem("Date")) {
-                    transaction.date = atoi(xmlTransactions.GetChildData().c_str());
-                }
-                if (xmlTransactions.FindChildElem("Item")) {
-                    transaction.item = xmlTransactions.GetChildData();
-                }
-                if (xmlTransactions.FindChildElem("Amount")) {
-                    transaction.amount = atof(xmlTransactions.GetChildData().c_str());
-                }
-
-                transactions.push_back(transaction);
-                cout << "Dodano transakcje: " << transaction.item << " w wysokosci " << transaction.amount << endl;
+                xmlTransactions.OutOfElem();
             }
-
             xmlTransactions.OutOfElem();
         }
-        xmlTransactions.OutOfElem();
+    } else {
+        cout << "Nie mozna otworzyc pliku przychodow." << endl;
     }
 
-    while (xmlTransactions.FindElem("Expenses")) {
-        cout << "Znaleziono sekcję Expenses" << endl;
-        xmlTransactions.IntoElem();
-
-        while (xmlTransactions.FindElem("Transaction")) {
-            cout << "Znaleziono transakcję w Expenses" << endl;
+    fileExists = xmlTransactions.Load(expensesFileName);
+    if (fileExists) {
+        xmlTransactions.ResetPos();
+        xmlTransactions.FindElem();
+        while (xmlTransactions.FindElem("Expenses")) {
             xmlTransactions.IntoElem();
-
-            xmlTransactions.FindChildElem("UserId");
-            int userId = atoi(xmlTransactions.GetChildData().c_str());
-            cout << "Znaleziono UserId: " << userId << endl;
-
-            if (userId == loggedInUserId) {
-                Transaction transaction;
-                if (xmlTransactions.FindChildElem("TransactionId")) {
-                    transaction.id = atoi(xmlTransactions.GetChildData().c_str());
+            while (xmlTransactions.FindElem("Transaction")) {
+                xmlTransactions.IntoElem();
+                xmlTransactions.FindChildElem("UserId");
+                int userId = atoi(xmlTransactions.GetChildData().c_str());
+                if (userId == loggedInUserId) {
+                    Transaction transaction;
+                    if (xmlTransactions.FindChildElem("TransactionId")) {
+                        transaction.id = atoi(xmlTransactions.GetChildData().c_str());
+                    }
+                    if (xmlTransactions.FindChildElem("Date")) {
+                        transaction.date = atoi(xmlTransactions.GetChildData().c_str());
+                    }
+                    if (xmlTransactions.FindChildElem("Item")) {
+                        transaction.item = xmlTransactions.GetChildData();
+                    }
+                    if (xmlTransactions.FindChildElem("Amount")) {
+                        transaction.amount = atof(xmlTransactions.GetChildData().c_str());
+                    }
+                    transactions.push_back(transaction);
                 }
-                if (xmlTransactions.FindChildElem("Date")) {
-                    transaction.date = atoi(xmlTransactions.GetChildData().c_str());
-                }
-                if (xmlTransactions.FindChildElem("Item")) {
-                    transaction.item = xmlTransactions.GetChildData();
-                }
-                if (xmlTransactions.FindChildElem("Amount")) {
-                    transaction.amount = atof(xmlTransactions.GetChildData().c_str());
-                }
-
-                transactions.push_back(transaction);
-                cout << "Dodano transakcję: " << transaction.item << " w wysokości " << transaction.amount << endl;
+                xmlTransactions.OutOfElem();
             }
-
             xmlTransactions.OutOfElem();
         }
-        xmlTransactions.OutOfElem();
+    } else {
+        cout << "Nie mozna otworzyc pliku wydatkow." << endl;
     }
-} else {
-    cout << "Nie mozna otworzyc pliku." << endl;
-}
+
     return transactions;
 }

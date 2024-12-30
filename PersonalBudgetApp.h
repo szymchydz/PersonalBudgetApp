@@ -14,12 +14,13 @@ class PersonalBudgetApp {
 
     UserManager userManager;
     TransactionManager *transactionManager;
-    const string FILE_NAME_WITH_TRANSACTIONS;
+    const string FILE_NAME_WITH_INCOMES;
+    const string FILE_NAME_WITH_EXPENSES;
 
 public:
 
-    PersonalBudgetApp(const string& fileNameWithUsers, const string& fileNameWithTransactions)
-        : userManager(fileNameWithUsers), FILE_NAME_WITH_TRANSACTIONS(fileNameWithTransactions) {
+    PersonalBudgetApp(const string& fileNameWithUsers, const string& fileNameWithIncomes, const string& fileNameWithExpenses)
+        : userManager(fileNameWithUsers), FILE_NAME_WITH_INCOMES(fileNameWithIncomes), FILE_NAME_WITH_EXPENSES(fileNameWithExpenses)  {
     };
 
     ~PersonalBudgetApp() {

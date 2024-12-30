@@ -2,42 +2,40 @@
 
 char AuxiliaryMethods::getchar() {
     string input;
-
     while (true) {
         getline(cin, input);
 
         if (input.length() == 1) {
             return input[0];
         }
+
         cout << "To nie jest pojedynczy znak. Sprobuj ponownie." << endl;
     }
 }
 
-string AuxiliaryMethods :: readLine() {
-    string input = "";
+string AuxiliaryMethods::readLine() {
+    string input;
     getline(cin, input);
     return input;
 }
 
-int AuxiliaryMethods::convertStringToInt(string number) {
-
+int AuxiliaryMethods::convertStringToInt(const string& number) {
     int numberInt;
-    istringstream iss(number);
-    iss >> numberInt;
-
+    istringstream(number) >> numberInt; // Directly stream into integer
     return numberInt;
 }
 
-string AuxiliaryMethods :: validateInput (string input) {
+string AuxiliaryMethods::validateInput(string input) {
+    size_t sizeOfAmount = input.size();
 
-int sizeOfAmount = input.size();
-
-    for (int i = 0; i < sizeOfAmount; i++) {
-
-        if ((input[i] == ',') ||(input[i]=='.')) {
+    for (size_t i = 0; i < sizeOfAmount; i++) {
+        if (input[i] == ',' || input[i] == '.') {
             input[i] = '.';
-            if (sizeOfAmount > i+3)
-                input.erase(i+3, sizeOfAmount-i-3);
+
+            // Limiting the length of the string after the decimal point to 2 digits
+            if (sizeOfAmount > i + 3) {
+                input.erase(i + 3, sizeOfAmount - i - 3);
+            }
             return input;
         }
     }
@@ -45,17 +43,9 @@ int sizeOfAmount = input.size();
 }
 
 string AuxiliaryMethods::convertIntToString(int number) {
-
-    ostringstream ss;
-    ss << number;
-    string str = ss.str();
-
-    return str;
+    return to_string(number); // C++11 has a built-in function for converting int to string
 }
 
-double AuxiliaryMethods::convertStringToDouble(string amount) {
-
-    double amountDouble = atof(amount.c_str());
-
-    return amountDouble;
+double AuxiliaryMethods::convertStringToDouble(const string& amount) {
+    return atof(amount.c_str()); // Convert string to double
 }

@@ -9,7 +9,7 @@ void PersonalBudgetApp :: loginUser() {
 
     userManager.loginUser();
     if (userManager.isUserLoggedIn()) {
-        transactionManager = new TransactionManager (FILE_NAME_WITH_TRANSACTIONS, userManager.getLoggedInUserId());
+        transactionManager = new TransactionManager (FILE_NAME_WITH_INCOMES, FILE_NAME_WITH_EXPENSES, userManager.getLoggedInUserId());
     }
 }
 

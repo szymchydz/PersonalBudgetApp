@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
 
-    PersonalBudgetApp personalBudgetApp ("users.xml", "transaction.xml");
+    PersonalBudgetApp personalBudgetApp ("users.xml", "Incomes.xml","Expenses.xml");
 
     char choice;
 

@@ -26,7 +26,7 @@ public:
     };
     int currentTransactionId;
     bool addTransactionToFile (Transaction &transaction, const Type &type);
-    vector <Transaction> loadTransactionFromFile(int loggedInUserId);
+    vector<Transaction> loadTransactionFromFiles(int loggedInUserId, const string& incomesFile, const string& expensesFile);
     void loadCurrentId();
 
 };

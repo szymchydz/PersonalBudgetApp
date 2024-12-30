@@ -24,11 +24,11 @@ Transaction TransactionManager::addTransactionDetails(const Type &type) {
     switch(type) {
 
     case INCOME:
-        transaction.id = transactionFile.currentTransactionId + 1;
+        transaction.id = incomesFile.currentTransactionId + 1;
         typeDescription = "incomes";
         break;
     case EXPENSE:
-        transaction.id = transactionFile.currentTransactionId +1;
+        transaction.id = expensesFile.currentTransactionId +1;
         typeDescription = "expenses";
         break;
     }
@@ -71,7 +71,6 @@ Transaction TransactionManager::addTransactionDetails(const Type &type) {
 }
 
 void TransactionManager::addIncome() {
-
     Transaction income;
 
     system("cls");
@@ -79,17 +78,17 @@ void TransactionManager::addIncome() {
     income = addTransactionDetails(INCOME);
     incomes.push_back(income);
 
-    if(transactionFile.addTransactionToFile(income, INCOME) == true) {
-        cout << "Nowy przychod zostal dodany do pliku." << endl;
-    } else
+    if (incomesFile.addTransactionToFile(income, INCOME)) {
+        cout << "Nowy przychod zosta³ dodany do pliku." << endl;
+    } else {
         cout << "Blad. Nie udalo sie dodac nowego przychodu do pliku." << endl;
+    }
 
-    cout << incomes.size() << endl;
+    cout << "Liczba przychodow: " << incomes.size() << endl;
     system("pause");
 }
 
 void TransactionManager::addExpense() {
-
     Transaction expense;
 
     system("cls");
@@ -97,10 +96,13 @@ void TransactionManager::addExpense() {
     expense = addTransactionDetails(EXPENSE);
     expenses.push_back(expense);
 
-    if(transactionFile.addTransactionToFile(expense, EXPENSE) == true) {
+    if (expensesFile.addTransactionToFile(expense, EXPENSE)) {
         cout << "Nowy wydatek zostal dodany do pliku." << endl;
-    } else
+    } else {
         cout << "Blad. Nie udalo sie dodac nowego wydatku do pliku." << endl;
+    }
+
+    cout << "Liczba wydatkow: " << expenses.size() << endl;
     system("pause");
 }
 
@@ -149,7 +151,7 @@ string TransactionManager::displayTransactions(int number, const Type &type) {
 
 double TransactionManager::calculateBalanceSheet(int startDate, int endDate, const Type& type) {
     if (startDate > endDate) {
-        cout << "Blad! Data poczatkowa jest pozniejsza niÅ¼ data koncowa." << endl;
+        cout << "Blad! Data poczatkowa jest pozniejsza ni¿ data koncowa." << endl;
         return 0.0;
     }
 
@@ -188,7 +190,7 @@ double TransactionManager::calculateBalanceSheet(int startDate, int endDate, con
         break;
     }
     default:
-        cout <<  "NieprawidÅ‚owy typ transakcji." << endl;
+        cout <<  "Nieprawid³owy typ transakcji." << endl;
         return 0.0;
     }
 
