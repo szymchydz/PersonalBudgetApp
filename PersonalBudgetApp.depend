@@ -8,7 +8,7 @@
 	<iomanip>
 	<string>
 
-1735583585 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\main.cpp
+1737395862 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\main.cpp
 	<iostream>
 	"PersonalBudgetApp.h"
 
@@ -63,17 +63,17 @@
 1735583585 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\usersfile.cpp
 	"UsersFile.h"
 
-1735583585 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.h
+1737395862 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.h
 	<iostream>
 	<string>
 	"UserManager.h"
 	"TransactionManager.h"
 	"AuxiliaryMethods.h"
 
-1735587828 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.cpp
+1737395862 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\personalbudgetapp.cpp
 	"PersonalBudgetApp.h"
 
-1735586615 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionfile.cpp
+1737896075 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionfile.cpp
 	"TransactionFile.h"
 
 1735585053 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\datemethods.cpp
@@ -89,7 +89,7 @@
 	<algorithm>
 	"AuxiliaryMethods.h"
 
-1735587989 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionmanager.h
+1737815360 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionmanager.h
 	<iostream>
 	<vector>
 	<cstdlib>
@@ -105,12 +105,13 @@
 1733686155 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transaction.h
 	<string>
 
-1735585917 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionfile.h
+1737814454 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionfile.h
 	<iostream>
 	<vector>
 	<fstream>
 	<cstdlib>
 	<string>
+	<filesystem>
 	"Transaction.h"
 	"AuxiliaryMethods.h"
 	"DateMethods.h"
@@ -121,6 +122,6 @@
 1732474980 c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\type.h
 	<iostream>
 
-1735587419 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionmanager.cpp
+1737395862 source:c:\moje pliki\programy\c++\c++ programy\personalbudgetapp\transactionmanager.cpp
 	"TransactionManager.h"
 

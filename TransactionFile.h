@@ -7,6 +7,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <string>
+#include <filesystem>
 
 #include "Transaction.h"
 #include "AuxiliaryMethods.h"
@@ -26,7 +27,7 @@ public:
     };
     int currentTransactionId;
     bool addTransactionToFile (Transaction &transaction, const Type &type);
-    vector<Transaction> loadTransactionFromFiles(int loggedInUserId, const string& incomesFile, const string& expensesFile);
+    vector<Transaction> loadTransactionFromFiles(int loggedInUserId, string fileName);
     void loadCurrentId();
 
 };

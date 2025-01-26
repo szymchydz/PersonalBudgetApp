@@ -20,7 +20,7 @@ class TransactionManager {
     const int LOGGED_IN_USER_ID;
     vector<Transaction> incomes;
     vector<Transaction> expenses;
-    vector<Transaction> transactions;
+
     TransactionFile incomesFile;
     TransactionFile expensesFile;
 
@@ -36,18 +36,19 @@ class TransactionManager {
 
 public:
     TransactionManager(string fileNameWithIncomes, string fileNameWithExpenses, int loggedInUserId)
-    : LOGGED_IN_USER_ID(loggedInUserId), incomesFile(fileNameWithIncomes), expensesFile(fileNameWithExpenses) {
+    :  incomesFile(fileNameWithIncomes), expensesFile(fileNameWithExpenses), LOGGED_IN_USER_ID(loggedInUserId) {
 
         cout << "Ladowanie transakcji dla uzytkownika ID: " << LOGGED_IN_USER_ID << endl;
         cout << "ID zalogowanego uzytkownika: " << loggedInUserId << endl;
 
-        vector<Transaction> incomeTransactions = incomesFile.loadTransactionFromFiles(LOGGED_IN_USER_ID, fileNameWithIncomes, fileNameWithExpenses);
-        vector<Transaction> expenseTransactions = expensesFile.loadTransactionFromFiles(LOGGED_IN_USER_ID, fileNameWithIncomes, fileNameWithExpenses);
+        cout <<"Plik przychodow " << fileNameWithIncomes << endl;
+        cout <<"Plik wydatkow " << fileNameWithExpenses << endl;
+        system("pause");
 
-        transactions.insert(transactions.end(), incomeTransactions.begin(), incomeTransactions.end());
-        transactions.insert(transactions.end(), expenseTransactions.begin(), expenseTransactions.end());
+        incomes = incomesFile.loadTransactionFromFiles(loggedInUserId,fileNameWithIncomes);
+        expenses = expensesFile.loadTransactionFromFiles(loggedInUserId, fileNameWithExpenses);
 
-        cout << "Zaladowano " << incomeTransactions.size() << " przychodow i " << expenseTransactions.size() << " wydatkow." << endl;
+        cout << "Zaladowano " << incomes.size() << " przychodow i " << expenses.size() <<  " wydatkow." << endl;
         system("pause");
     }
 
