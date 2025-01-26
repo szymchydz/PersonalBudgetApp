@@ -39,14 +39,9 @@ public:
     :  incomesFile(fileNameWithIncomes), expensesFile(fileNameWithExpenses), LOGGED_IN_USER_ID(loggedInUserId) {
 
         cout << "Ladowanie transakcji dla uzytkownika ID: " << LOGGED_IN_USER_ID << endl;
-        cout << "ID zalogowanego uzytkownika: " << loggedInUserId << endl;
 
-        cout <<"Plik przychodow " << fileNameWithIncomes << endl;
-        cout <<"Plik wydatkow " << fileNameWithExpenses << endl;
-        system("pause");
-
-        incomes = incomesFile.loadTransactionFromFiles(loggedInUserId,fileNameWithIncomes);
-        expenses = expensesFile.loadTransactionFromFiles(loggedInUserId, fileNameWithExpenses);
+        incomes = incomesFile.loadIncomesFromFile(loggedInUserId,fileNameWithIncomes);
+        expenses = expensesFile.loadExpensesFromFile(loggedInUserId, fileNameWithExpenses);
 
         cout << "Zaladowano " << incomes.size() << " przychodow i " << expenses.size() <<  " wydatkow." << endl;
         system("pause");

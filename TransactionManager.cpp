@@ -28,7 +28,7 @@ Transaction TransactionManager::addTransactionDetails(const Type &type) {
         typeDescription = "incomes";
         break;
     case EXPENSE:
-        transaction.id = expensesFile.currentTransactionId +1;
+        transaction.id = expensesFile.currentTransactionId + 1;
         typeDescription = "expenses";
         break;
     }

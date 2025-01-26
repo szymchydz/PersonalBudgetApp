@@ -22,12 +22,13 @@ class TransactionFile : public TextFile {
     CMarkup xmlTransactions;
 
 public:
-    TransactionFile(const string& fileName) : TextFile(fileName), currentTransactionId(0) {
+    TransactionFile(const string& fileName) : TextFile(fileName), currentTransactionId() {
         loadCurrentId();
     };
     int currentTransactionId;
-    bool addTransactionToFile (Transaction &transaction, const Type &type);
-    vector<Transaction> loadTransactionFromFiles(int loggedInUserId, string fileName);
+    bool addTransactionToFile(const Transaction &transaction, const Type &type);
+    vector<Transaction> loadIncomesFromFile(int loggedInUserId, string fileName);
+    vector<Transaction> loadExpensesFromFile(int loggedInUserId, string fileName);
     void loadCurrentId();
 
 };
