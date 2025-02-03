@@ -1,28 +1,24 @@
 #include "TransactionFile.h"
 
-void TransactionFile::loadCurrentId() {
-    string fileName = getFileName();
-    vector<Transaction> incomes = loadIncomesFromFile(-1, fileName);
-    vector<Transaction> expenses = loadExpensesFromFile(-1, fileName);
+int TransactionFile::loadLastTransactionId() {
+ string fileName = getFileName();
+ ifstream file(fileName);
 
-    int maxIncomeId = 0;
-    int maxExpenseId = 0;
-
-    if (!incomes.empty()) {
-        maxIncomeId = max_element(
-            incomes.begin(), incomes.end(),
-            [](const Transaction &a, const Transaction &b) { return a.id < b.id; }
-        )->id;
+     xmlTransactions.Load(fileName);
+    if(xmlTransactions.FindElem("Incomes"))
+    {
+        xmlTransactions.IntoElem();
+        while(xmlTransactions.FindChildElem("Transation"))
+        {
+            while(xmlTransactions.FindChildElem("TransactionId"))
+            {
+                lastTransactionId = AuxiliaryMethods::convertStringToInt(xmlTransactions.GetChildData());
+            }
+            xmlTransactions.OutOfElem();
+        }
+        xmlTransactions.OutOfElem();
     }
-
-    if (!expenses.empty()) {
-        maxExpenseId = max_element(
-            expenses.begin(), expenses.end(),
-            [](const Transaction &a, const Transaction &b) { return a.id < b.id; }
-        )->id;
-    }
-
-    currentTransactionId = max(maxIncomeId, maxExpenseId);
+    return lastTransactionId;
 }
 
 bool TransactionFile::addTransactionToFile(const Transaction &transaction, const Type &type) {
@@ -62,7 +58,8 @@ bool TransactionFile::addTransactionToFile(const Transaction &transaction, const
 
     if (xmlTransactions.Save(fileName)) {
         cout << "Dane zostaly zapisane." << endl;
-        currentTransactionId++;
+        lastTransactionId = loadLastTransactionId();
+        lastTransactionId++;
         return true;
     } else {
         cout << "Nie udalo sie zapisac pliku." << endl;
@@ -71,80 +68,37 @@ bool TransactionFile::addTransactionToFile(const Transaction &transaction, const
 }
 
 
-vector<Transaction> TransactionFile::loadIncomesFromFile(int loggedInUserId, string fileNameWithIncomes) {
-    Transaction income;
-    vector<Transaction> incomes;
+vector<Transaction> TransactionFile::loadTransactionsFromFile(int loggedInUserId, const string &transactionType, const string &fileName) {
+    Transaction transaction;
+    vector<Transaction> transactions;
 
-    bool fileExists = xmlTransactions.Load(fileNameWithIncomes);
-
-
-    if (fileExists) {
-        xmlTransactions.ResetPos();
-        xmlTransactions.FindElem("Incomes");
-        xmlTransactions.IntoElem();
-
+    if (xmlTransactions.Load(fileName)) {
+        if (xmlTransactions.FindElem(transactionType)) {
+            xmlTransactions.IntoElem();
             while (xmlTransactions.FindElem("Transaction")) {
-
                 xmlTransactions.FindChildElem("UserId");
-                income.userId = atoi(xmlTransactions.GetChildData().c_str());
-
+                transaction.userId = stoi(xmlTransactions.GetChildData());
                 xmlTransactions.FindChildElem("TransactionId");
-                income.id = atoi(xmlTransactions.GetChildData().c_str());
-
+                transaction.id = stoi(xmlTransactions.GetChildData());
                 xmlTransactions.FindChildElem("Date");
-                income.date = atoi(xmlTransactions.GetChildData().c_str());
-
+                transaction.date = stoi(xmlTransactions.GetChildData());
                 xmlTransactions.FindChildElem("Item");
-                income.item = xmlTransactions.GetChildData();
-
+                transaction.item = xmlTransactions.GetChildData();
                 xmlTransactions.FindChildElem("Amount");
-                income.amount = atof(xmlTransactions.GetChildData().c_str());
-
-                if (income.userId == loggedInUserId)
-                    incomes.push_back(income);
+                transaction.amount = stof(xmlTransactions.GetChildData());
+                if (transaction.userId == loggedInUserId)
+                    transactions.push_back(transaction);
             }
-
             xmlTransactions.OutOfElem();
         }
-    return incomes;
+    }
+    return transactions;
+}
+
+vector<Transaction> TransactionFile::loadIncomesFromFile(int loggedInUserId, string fileNameWithIncomes) {
+    return loadTransactionsFromFile(loggedInUserId, "Incomes", fileNameWithIncomes);
 }
 
 vector<Transaction> TransactionFile::loadExpensesFromFile(int loggedInUserId, string fileNameWithExpenses) {
-    Transaction expense;
-    vector<Transaction> expenses;
-
-    bool fileExists = xmlTransactions.Load(fileNameWithExpenses);
-
-
-    if (fileExists) {
-        xmlTransactions.ResetPos();
-        xmlTransactions.FindElem("Expenses");
-        xmlTransactions.IntoElem();
-
-            while (xmlTransactions.FindElem("Transaction")) {
-
-                xmlTransactions.FindChildElem("UserId");
-                expense.userId = atoi(xmlTransactions.GetChildData().c_str());
-
-                xmlTransactions.FindChildElem("TransactionId");
-                expense.id = atoi(xmlTransactions.GetChildData().c_str());
-
-                xmlTransactions.FindChildElem("Date");
-                expense.date = atoi(xmlTransactions.GetChildData().c_str());
-
-                xmlTransactions.FindChildElem("Item");
-                expense.item = xmlTransactions.GetChildData();
-
-                xmlTransactions.FindChildElem("Amount");
-                expense.amount = atof(xmlTransactions.GetChildData().c_str());
-
-                if (expense.userId == loggedInUserId)
-                    expenses.push_back(expense);
-            }
-
-            xmlTransactions.OutOfElem();
-        }
-    return expenses;
+    return loadTransactionsFromFile(loggedInUserId, "Expenses", fileNameWithExpenses);
 }
-
-

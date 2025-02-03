@@ -44,6 +44,7 @@ public:
         expenses = expensesFile.loadExpensesFromFile(loggedInUserId, fileNameWithExpenses);
 
         cout << "Zaladowano " << incomes.size() << " przychodow i " << expenses.size() <<  " wydatkow." << endl;
+        cout << "Ostatnie ID transakcji to: " << incomesFile.loadLastTransactionId() << endl;
         system("pause");
     }
 
