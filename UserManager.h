@@ -29,13 +29,11 @@ public:
         users = usersFile.loadUsersFromFile();
     };
 
-
     void addUser();
-    int loginUser();
     void changeUserPassword();
     void logoutUser();
-
     bool isUserLoggedIn();
+    int loginUser();
     int getLoggedInUserId();
 
 };

@@ -1,25 +1,5 @@
 #include "TransactionFile.h"
 
-int TransactionFile::loadLastTransactionId() {
- string fileName = getFileName();
- ifstream file(fileName);
-
-     xmlTransactions.Load(fileName);
-    if(xmlTransactions.FindElem("Incomes"))
-    {
-        xmlTransactions.IntoElem();
-        while(xmlTransactions.FindChildElem("Transation"))
-        {
-            while(xmlTransactions.FindChildElem("TransactionId"))
-            {
-                lastTransactionId = AuxiliaryMethods::convertStringToInt(xmlTransactions.GetChildData());
-            }
-            xmlTransactions.OutOfElem();
-        }
-        xmlTransactions.OutOfElem();
-    }
-    return lastTransactionId;
-}
 
 bool TransactionFile::addTransactionToFile(const Transaction &transaction, const Type &type) {
     string fileName = getFileName();
@@ -58,15 +38,12 @@ bool TransactionFile::addTransactionToFile(const Transaction &transaction, const
 
     if (xmlTransactions.Save(fileName)) {
         cout << "Dane zostaly zapisane." << endl;
-        lastTransactionId = loadLastTransactionId();
-        lastTransactionId++;
         return true;
     } else {
         cout << "Nie udalo sie zapisac pliku." << endl;
         return false;
     }
 }
-
 
 vector<Transaction> TransactionFile::loadTransactionsFromFile(int loggedInUserId, const string &transactionType, const string &fileName) {
     Transaction transaction;

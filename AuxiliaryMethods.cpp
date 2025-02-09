@@ -8,7 +8,6 @@ char AuxiliaryMethods::getchar() {
         if (input.length() == 1) {
             return input[0];
         }
-
         cout << "To nie jest pojedynczy znak. Sprobuj ponownie." << endl;
     }
 }
@@ -21,7 +20,7 @@ string AuxiliaryMethods::readLine() {
 
 int AuxiliaryMethods::convertStringToInt(const string& number) {
     int numberInt;
-    istringstream(number) >> numberInt; // Directly stream into integer
+    istringstream(number) >> numberInt;
     return numberInt;
 }
 
@@ -32,7 +31,6 @@ string AuxiliaryMethods::validateInput(string input) {
         if (input[i] == ',' || input[i] == '.') {
             input[i] = '.';
 
-            // Limiting the length of the string after the decimal point to 2 digits
             if (sizeOfAmount > i + 3) {
                 input.erase(i + 3, sizeOfAmount - i - 3);
             }
@@ -43,9 +41,9 @@ string AuxiliaryMethods::validateInput(string input) {
 }
 
 string AuxiliaryMethods::convertIntToString(int number) {
-    return to_string(number); // C++11 has a built-in function for converting int to string
+    return to_string(number);
 }
 
 double AuxiliaryMethods::convertStringToDouble(const string& amount) {
-    return atof(amount.c_str()); // Convert string to double
+    return atof(amount.c_str());
 }

@@ -1,5 +1,8 @@
 #include "TransactionManager.h"
 
+int TransactionManager::loadLastTransactionId(const vector<Transaction>& transactions) {
+    return transactions.empty() ? 0 : transactions.size();
+}
 
 char TransactionManager::selectOptionFromDateMenu() {
 
@@ -16,49 +19,44 @@ char TransactionManager::selectOptionFromDateMenu() {
 }
 
 Transaction TransactionManager::addTransactionDetails(const Type &type) {
-
     Transaction transaction;
     string typeDescription, date;
     char choice;
 
-    switch(type) {
+    const vector<Transaction>& transactions = (type == INCOME) ? incomes : expenses;
 
-    case INCOME:
-        transaction.id = incomesFile.lastTransactionId + 1;
-        typeDescription = "incomes";
-        break;
-    case EXPENSE:
-        transaction.id = expensesFile.lastTransactionId + 1;
-        typeDescription = "expenses";
-        break;
-    }
+    transaction.id = loadLastTransactionId(transactions) + 1;
+
+    typeDescription = (type == INCOME) ? "przychod" : "wydatek";
 
     transaction.userId = LOGGED_IN_USER_ID;
-
     choice = selectOptionFromDateMenu();
 
     switch (choice) {
-
-    case '1':
-        date = dateMethods.getTimeFromSystem();
-        break;
-    case '2':
-        do {
-            system("cls");
-            cout << "Prosze o wpisanie daty w formacie rrrr-mm-dd. Zostanie dodany " << typeDescription << " do Budzetu. Data musi miescic sie w zakresie czasowym od 2000-01-01 do maksymalnie ostatniego dnia biezacego miesiaca." << endl << endl;
-            date = AuxiliaryMethods::readLine();
-            if (dateMethods.checkFormatDateIsCorrect(date) == false)
-                cout << "Niepoprawny format daty lub niepoprawnie podany zakres czasowy." << endl;
-        } while (dateMethods.checkFormatDateIsCorrect(date)== false);
-        break;
-    case '9':
-        exit(0);
-        break;
-    default:
-        cout << endl << "Nie ma takiej opcji w menu." << endl << endl;
-        system("pause");
-        break;
+        case '1':
+            date = dateMethods.getTimeFromSystem();
+            break;
+        case '2':
+            do {
+                system("cls");
+                cout << "Prosze o wpisanie daty w formacie rrrr-mm-dd. Zostanie dodany "
+                     << typeDescription
+                     << " do Budzetu. Data musi miescic sie w zakresie czasowym od 2000-01-01 do maksymalnie ostatniego dnia biezacego miesiaca."
+                     << endl << endl;
+                date = AuxiliaryMethods::readLine();
+                if (!dateMethods.checkFormatDateIsCorrect(date))
+                    cout << "Niepoprawny format daty lub niepoprawnie podany zakres czasowy." << endl;
+            } while (!dateMethods.checkFormatDateIsCorrect(date));
+            break;
+        case '9':
+            exit(0);
+            break;
+        default:
+            cout << endl << "Nie ma takiej opcji w menu." << endl << endl;
+            system("pause");
+            break;
     }
+
     transaction.date = AuxiliaryMethods::convertStringToInt(dateMethods.changeDateWithHyphenToDateWithoutHyphen(date));
     system("cls");
     cout << "Prosze o wpisanie czego dotyczy " << typeDescription << ": " << endl;
@@ -79,7 +77,7 @@ void TransactionManager::addIncome() {
     incomes.push_back(income);
 
     if (incomesFile.addTransactionToFile(income, INCOME)) {
-        cout << "Nowy przychod zosta³ dodany do pliku." << endl;
+        cout << "Nowy przychod zostal dodany do pliku." << endl;
     } else {
         cout << "Blad. Nie udalo sie dodac nowego przychodu do pliku." << endl;
     }
@@ -151,7 +149,7 @@ string TransactionManager::displayTransactions(int number, const Type &type) {
 
 double TransactionManager::calculateBalanceSheet(int startDate, int endDate, const Type& type) {
     if (startDate > endDate) {
-        cout << "Blad! Data poczatkowa jest pozniejsza ni¿ data koncowa." << endl;
+        cout << "Blad! Data poczatkowa jest pozniejsza niz data koncowa." << endl;
         return 0.0;
     }
 

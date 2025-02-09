@@ -23,7 +23,6 @@ int UserManager :: getLastUserId() {
 User UserManager :: enterUserData() {
 
     User user;
-
     user.id = getLastUserId();
 
     do {

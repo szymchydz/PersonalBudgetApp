@@ -35,16 +35,16 @@ class TransactionManager {
     void displayCalculateBalanceSheet(int startDate, int endDate);
 
 public:
+
+
     TransactionManager(string fileNameWithIncomes, string fileNameWithExpenses, int loggedInUserId)
     :  incomesFile(fileNameWithIncomes), expensesFile(fileNameWithExpenses), LOGGED_IN_USER_ID(loggedInUserId) {
 
         cout << "Ladowanie transakcji dla uzytkownika ID: " << LOGGED_IN_USER_ID << endl;
-
         incomes = incomesFile.loadIncomesFromFile(loggedInUserId,fileNameWithIncomes);
         expenses = expensesFile.loadExpensesFromFile(loggedInUserId, fileNameWithExpenses);
 
         cout << "Zaladowano " << incomes.size() << " przychodow i " << expenses.size() <<  " wydatkow." << endl;
-        cout << "Ostatnie ID transakcji to: " << incomesFile.loadLastTransactionId() << endl;
         system("pause");
     }
 
@@ -53,6 +53,7 @@ public:
     void displayCurrentMonthBalanceSheet();
     void displayPreviousMonthBalanceSheet();
     void displayBalanceSheetFromSelectedTimePeriod();
+    int loadLastTransactionId(const vector<Transaction>& transactions);
 };
 
 #endif // TRANSACTIONMANAGER_H
