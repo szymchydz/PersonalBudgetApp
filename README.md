@@ -1,9 +1,9 @@
 # Personal Finance Management Application
 
-# Overview
+## Overview
 The application enables comprehensive management of personal finances. With an intuitive interface, users can record their incomes and expenses, analyze balances, and track their finances over different time periods. The XML file system allows for convenient storage and processing of data, making the application an efficient tool for budget planning.
 
-# Features
+##  Features
 * User-friendly interface for tracking income and expenses
  
 * Monthly and custom period balance analysis
@@ -12,15 +12,15 @@ The application enables comprehensive management of personal finances. With an i
   
 * Data storage in XML format for easy accessibility
 
-# Installation
+##  Installation
 1. Clone the repository: git clone https://github.com/yourusername/finance-app.git
    
 2. Navigate to the project directory: cd finance-app
    
 3. Run the application following the provided setup guide.
 
-# Contribution
+##  Contribution
 Feel free to contribute by submitting issues and pull requests. Any improvements or bug fixes are welcome!
 
-# License
+##  License
 This project is licensed under the MIT License - see the LICENSE file for details.
